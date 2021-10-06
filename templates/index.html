@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block cuerpo %}
+<img class='img1' src='{{ url_for("static", filename="img/chairs.jpg") }}' alt=''/>
+    <section >
+        <table width=50%>
+            <caption><h1>Nuestros productos</h1></caption>
+            <tbody>
+                <tr>
+                    <td>Producto a vender</td>
+                    <td>Producto a vender</td>
+                    <td>Producto a vender</td>
+                </tr>
+                <tr>
+                    <td>Producto a vender</td>
+                    <td>Producto a vender</td>
+                    <td>Producto a vender</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+<img class='img2' src='{{ url_for("static", filename="img/coffeejpg.jpg") }}' alt='' width='100%'/>
+{% endblock %}
+

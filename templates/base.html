@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        {% if titulo %}
+        <title>{{ titulo }}</title>
+        {% else %}
+        <title>Glorian Jean's Coffee</title>
+        {% endif %}
+        <link rel='stylesheet' type='text/css' href='{{ url_for("static", filename="css/style01.css") }}' />
+        <link rel='stylesheet' type='text/css' href='{{ url_for("static", filename="css/style01.css") }}' />
+    </head>
+    <body>
+       <div class='header'>
+           <div class='c2'><a class='c2a' href='/'>Glorian Jean's Coffee</a></div>
+           <nav class='nav'>
+               <ul>
+                   {% if 'usr_id' in session %}
+                   <li class='c1'><a href='/favorites/'>Favoritos</a></li>
+                   <li class='c1'><a href='/username/'>{{ usuario }}</a></li>
+                   {% else %}
+                   <li class='c1'><a href='/login/'>Entrar</a></li>
+                   <li class='c1'><button class='bt1' href='/sign_in/'><a>Registrate</a></button></li>
+                   {% endif %}
+                   <li class='c1'><a href="/buscar/">Buscar</a></li>
+                   <li class='c1'><a href="/comprar/">comprar</a></li>
+               </ul>
+           </nav>
+       </div> 
+       <div class='wkarea'>
+           {% block cuerpo %}{% endblock %}
+       </div>
+       <div class='footer'>
+            <p>&copy;KEOSARI</p>
+       </div>
+    </body>
+</html>
