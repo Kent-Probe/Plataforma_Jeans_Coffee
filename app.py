@@ -13,6 +13,7 @@ def login():
 
 @app.route("/sign_in/")
 def sign():
+    #Recall you have to send the template along with the formulary class (must be imported previously)
     return render_template('sign_in.html')
 
 @app.route("/username/")
