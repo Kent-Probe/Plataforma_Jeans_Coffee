@@ -1,3 +1,32 @@
 {% extends 'base.html' %}
 {% block cuerpo %}
+<form name='fregistro' id='fregistro' action='/sign_in/' method='POST'>
+    <div class='login'>
+        <div class='fila'>
+            <div class='c3'>{{ form.nom.label }}</div>
+            <div class='c7'>{{ form.nom(size=100, minlength=1, maxlength=100)}}</div>
+        </div>
+        <div class='fila'>
+            <div class='c3'>{{ form.ema.label }}</div>
+            <div class='c7'>{{ form.ema(size=100, minlength=3, maxlength=100)}}</div>
+        </div>
+        <div class='fila'>
+            <div class='c3'>{{ form.usr.label }}</div>
+            <div class='c7'>{{ form.usr(size=40, minlength=5, maxlength=40)}}</div>
+        </div>
+        <div class='fila'>
+            <div class='c3'>{{ form.cla.label }}</div>
+            <div class='c7'>{{ form.cla(size=40, minlength=5, maxlength=40)}}</div>
+        </div>
+        <div class='fila'>
+            <div class='c3'>{{ form.ver.label }}</div>
+            <div class='c7'>{{ form.ver(size=40, minlength=5, maxlength=40)}}</div>
+        </div>
+        <div class='fila'><br /><hr /><br /></div>
+        <div class='fila'>
+            <div class='c8'>&nbsp;</div>
+            <div class='c2'>{{ form.btn() }}</div>
+        </div>
+    </div>
+</form>
 {% endblock %}
