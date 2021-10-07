@@ -1,29 +1,26 @@
 {% extends 'base.html' %}
 {% block cuerpo %}
+<img class="imgLogin" src='{{ url_for("static", filename="img/chairs.jpg") }}' alt=''/>
 <frame>
-    <svg>
-        <rect width='100%' height='100%'/>
-    </svg>
     <svg >
-        <ellipse cx="200" cy="80" rx="100" ry="50" height="140" width="500"/>
+        <ellipse cx="200" cy="80" rx="100" ry="50"/>
     </svg> 
     <form name='flogin' id='flogin' action='/login/' method='POST'>
-        <div class='login'>
-            <div class='fila'>
-                <div class='c3'>{{ form.usr.label }}</div>
-                <div class='c7'>{{ form.usr(size=40, minlength=5, maxlength=40)}}</div>
+        <div class="frameLogin">
+            <div>
+                <div class='label'>{{ form.usr.label }}</div>
+                <div class='field'>{{ form.usr(minlength=5, maxlength=40)}}</div>
             </div>
-            <div class='fila'>
-                <div class='c3'>{{ form.pwd.label }}</div>
-                <div class='c7'>{{ form.pwd(size=40, minlength=5, maxlength=40)}}</div>
+            <div>
+                <div class='label'>{{ form.pwd.label }}</div>
+                <div class='field'>{{ form.pwd(minlength=5, maxlength=40)}}</div>
             </div>
-            <div class='fila'>
+            <div>
                 <a href='/recuperar/'>recuperar contraseña</a>
             </div>
-            <div class='fila'><br /><hr /><br /></div>
-            <div class='fila'>
-                <div class='c8'>&nbsp;</div>
-                <div class='c2'>{{ form.btn() }}</div>
+            <div>
+                <div>&nbsp;</div>
+                <div>{{ form.btn() }}</div>
             </div>
         </div>
     </form>

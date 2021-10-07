@@ -1,23 +1,137 @@
 {% extends 'base.html' %}
 {% block cuerpo %}
-<img class='img1' src='{{ url_for("static", filename="img/chairs.jpg") }}' alt=''/>
-    <section >
-        <table width=50%>
-            <caption><h1>Nuestros productos</h1></caption>
-            <tbody>
-                <tr>
-                    <td>Producto a vender</td>
-                    <td>Producto a vender</td>
-                    <td>Producto a vender</td>
-                </tr>
-                <tr>
-                    <td>Producto a vender</td>
-                    <td>Producto a vender</td>
-                    <td>Producto a vender</td>
-                </tr>
-            </tbody>
-        </table>
+    <!-- section header imagen -->
+    <section class="img-header">
+      <div class="banner">
+        <img src="{{url_for('static',filename='img/chairs.jpg')}}" class="foto-banner" alt="" />
+      </div>
     </section>
-<img class='img2' src='{{ url_for("static", filename="img/coffeejpg.jpg") }}' alt='' width='100%'/>
-{% endblock %}
 
+    <!-- section nuestros productos -->
+
+    <section class="nproductos">
+      <h2 class="product">Nuestros <span> Productos </span></h2>
+      <div class="content-box">
+        <div class="box">
+          <img src="{{url_for('static',filename='img/plato2.jpg')}}" class="img" alt="plato2" />
+          <div class="contenido">
+            <p>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolores,
+              aliquam!
+            </p>
+            <p>$13000</p>
+          </div>
+        </div>
+        <div class="box">
+          <img src="{{url_for('static',filename='img/plato2.jpg')}}" class="img" alt="plato2" />
+          <div class="contenido">
+            <p>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolores,
+              aliquam!
+            </p>
+            <p>$13000</p>
+          </div>
+        </div>
+        <div class="box">
+          <img src="{{url_for('static',filename='img/plato2.jpg')}}" class="img" alt="plato2" />
+          <div class="contenido">
+            <p>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolores,
+              aliquam!
+            </p>
+            <p>$13000</p>
+          </div>
+        </div>
+        <div class="box">
+          <img src="{{url_for('static',filename='img/plato2.jpg')}}" class="img" alt="plato2" />
+          <div class="contenido">
+            <p>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolores,
+              aliquam!
+            </p>
+            <p>$13000</p>
+          </div>
+        </div>
+        <div class="box">
+          <img src="{{url_for('static',filename='img/plato2.jpg')}}" class="img" alt="plato2" />
+          <div class="contenido">
+            <p>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolores,
+              aliquam!
+            </p>
+            <p>$13000</p>
+          </div>
+        </div>
+        <div class="box">
+          <img src="{{url_for('static',filename='img/plato2.jpg')}}" class="img" alt="plato2" />
+          <div class="contenido">
+            <p>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolores,
+              aliquam!
+            </p>
+            <p>$13000</p>
+          </div>
+        </div>
+      </div>
+<div class="boton">
+    <a href='/all_product' class="btn">ver todos</a>
+
+</div>
+    </section>
+
+    <!-- imagen secundaria -->
+    <section class="img-secundaria">
+        <div class="contenido">
+            <h4>Nuestos</h4>
+        </div>
+
+    </section>
+       <!-- especiales del mes -->
+    <section class="especiales">
+        <h2 class="product">Especiales del <span> Mes </span></h2>
+        <div class="content-box">
+          <div class="box">
+            <img src="{{url_for('static',filename='img/plato2.jpg')}}" class="img" alt="plato2" />
+            <div class="contenido">
+              <p>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolores,
+                aliquam!
+              </p>
+              <p>$13000</p>
+            </div>
+          </div>
+          <div class="box">
+            <img src="{{url_for('static',filename='img/plato2.jpg')}}" class="img" alt="plato2" />
+            <div class="contenido">
+              <p>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolores,
+                aliquam!
+              </p>
+              <p>$13000</p>
+            </div>
+          </div>
+          <div class="box">
+            <img src="{{url_for('static',filename='img/plato2.jpg')}}" class="img" alt="plato2" />
+            <div class="contenido">
+              <p>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolores,
+                aliquam!
+              </p>
+              <p>$13000</p>
+            </div>
+          </div>
+          
+          </div>
+        </section>
+
+          <!-- footer -->
+          <section class="footer">
+            <footer>
+               
+
+
+            </footer>
+          </section>
+
+    <script src="{{url_for('static',filename='js/script.js')}}"></script>
+{% endblock %}

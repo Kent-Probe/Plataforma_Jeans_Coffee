@@ -1,39 +1,45 @@
 <!DOCTYPE html>
 <html lang="es">
-    <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        {% if titulo %}
-        <title>{{ titulo }}</title>
-        {% else %}
-        <title>Glorian Jean's Coffee</title>
-        {% endif %}
-        <link rel='stylesheet' type='text/css' href='{{ url_for("static", filename="css/style01.css") }}' />
-        <link rel='stylesheet' type='text/css' href='{{ url_for("static", filename="css/style01.css") }}' />
-    </head>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- link css -->
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/style.css')}}"/>
+
+    <!-- link font awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+    />
+    
+    <!-- link de favicon -->
+    <link rel="icon" href="{{ url_for('static',filename='img/favicon.png')}}">
+
+    {% if titulo %}
+    <title>{{ titulo }}</title>
+    {% else %}
+    <title>Glorian Jean's Coffee</title>
+    {% endif %}
+</head>
     <body>
-       <div class='header'>
-           <div class='c2'><a class='c2a' href='/'>Glorian Jean's Coffee</a></div>
-           <nav class='nav'>
-               <ul>
-                   {% if 'usr_id' in session %}
-                   <li class='c1'><a href='/favorites/'>Favoritos</a></li>
-                   <li class='c1'><a href='/username/'>{{ usuario }}</a></li>
-                   {% else %}
-                   <li class='c1'><a href='/login/'>Entrar</a></li>
-                   <li class='c1'><a href='/sign_in/'>Registrate</a></li>
-                   {% endif %}
-                   <li class='c1'><a href="/buscar/">Buscar</a></li>
-                   <li class='c1'><a href="/comprar/">comprar</a></li>
-               </ul>
-           </nav>
-       </div> 
-       <div class='wkarea'>
+        <header>
+            <a href="/home" class="logo">Gloria Jean's Coffees</a>
+            <div class="fas fa-bars" id="menu-bar"></div>
+            <nav class="navbar">
+                {% if 'usr_id' in session %}
+                <a href='/favorites'>Favoritos</a>
+                <a href='/usuario'>{{ usuario }}</a>
+                {% else %}  
+                <a href='/login'>Entrar</a>
+                <a href='/sign_in' id="principal">Registrarse</a>
+                {% endif %}
+                <a href='/shopping_car' id="carrito"><i class="fas fa-shopping-cart"></i> </a>
+                <a href="/buscar" id="buscar"><i class="fas fa-search"></i> </a>
+            </nav>
+        </header>
+        <div >
            {% block cuerpo %}{% endblock %}
-       </div>
-       <div class='footer'>
-            <p>&copy;KEOSARI</p>
-       </div>
-    </body>
+        </div>
 </html>
