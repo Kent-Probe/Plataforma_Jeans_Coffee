@@ -22,7 +22,7 @@ def login():
         # 1. Recuperar los datos del formulario y le aplico transformaciones
         usr = frm.usr.data.strip()
         pwd = frm.pwd.data.strip()
-        # 2. Validar (Siempre es una buena práctica)
+        # 2. Validar 
         sw = True
         if len(usr)<5 or len(usr)>40:
             flash("El nombre de usuario es requerido, longitud no valida [5-40]")
@@ -40,10 +40,9 @@ def login():
             return render_template('login.html', form=frm, titulo='Ingresar')
 
 
-
 @app.route("/sign_in/")
 def sign():
-    form = sign_in
+    form = sign_in()
     return render_template('sign_in.html', form=form, titulo='Registro')
 
 @app.route("/username/")
@@ -53,6 +52,14 @@ def username():
 @app.route("/favorites/")
 def favorites():
     return 'favorites'
+
+@app.route("/all_product/")
+def all_product():
+    return render_template('all_product.html', form=form, titulo='producto')
+
+@app.route("/shopping_car/")
+def shopping_car():
+    return render_template('shopping_car.html', form=form, titulo='producto')
 
 if __name__ == '__main__':
     app.run(debug=True)
