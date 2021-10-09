@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block cuerpo %}
+    <!-- section plato 'Individual' -->
+<section>
+    <div>
+        <div class='buscar'></div>
+        <h2 class="label-titulos">Plato</h2>
+    </div>
+    <div>
+        <div>
+            <img src="{{url_for('static',filename='img/plato2.jpg')}}">
+        </div>
+        <div>
+            <h1>Lee Pucket</h1>
+            <h1>$ 13.999</h1>
+            <h3>Descripcion</h3>
+            <p>Lee Pucker design. Leather botinki for handsome designers. Free shipping.</p>
+        </div>
+    </div>
+</section>
+    <!-- section plato 'Individual' -->
+<section>
+    <div>
+        <div class='buscar'></div>
+        <h2 class="label-titulos">{{nComentarios}} Comentarios</h2>
+    </div>
+</section>
+{% endblock %}
