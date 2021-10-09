@@ -84,10 +84,11 @@ header .navbar a:hover {
 header .navbar #principal {
   background: var(--marronclaro);
   padding: 1.2rem;
+  border-radius: 6px;
 }
 
 header .navbar #principal:hover {
-  color: #ffffff;
+  color: #865439;
 }
 
 .img-header {
@@ -109,8 +110,12 @@ header .navbar #principal:hover {
   background: var(--marron);
   color: #ffffff;
   font-size: 14px;
-
 }
+
+.boton .btn:hover{
+  padding: 1rem 7rem;
+}
+
 .product {
   text-align: center;
   font-size: 3rem;
@@ -156,11 +161,47 @@ header .navbar #principal:hover {
     background: var(--marron);
 }
 
-
-
-
-
-
+/*Buscar*/
+.buscar{
+  margin-top: 78px;
+  color: black;
+}
+.form-style-buscar{
+  background: #FFFAFA;
+  border: 1px solid #C68B59;
+  border-radius: 5px;
+  width: 80%;
+  height: 30px;
+}
+.label-titulos{
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 24px;
+  line-height: 36px;
+  
+  color: #06496E;
+}
+.rectangulo{
+  border-radius: 5px;
+  padding: 5px;
+  width: 50px;
+  background-color:var(--marronclaro);
+  position: absolute;
+  left: 71%;
+  height: 30px;
+}
+.icon-buscar{
+  color: #ffffff;
+  align-items: center;
+  margin-left: 10px;
+}
+/**/
+.plato{
+  border-radius: 5px;
+  width: 30px;
+  height: 30px;
+}
 
 
 
