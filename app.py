@@ -1,18 +1,20 @@
 from flask import Flask, render_template, request, session, flash
 from markupsafe import escape
 from wtforms import form
-from forms import Login, sign_in
+from forms import Login, sign_in, search, coment
 import os
 
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
 
+@app.route("/Principal/")
 @app.route("/home/")
 @app.route("/index/")
 @app.route("/")
 def index():
     return render_template('index.html')
 
+@app.route('/Entrar/', methods=['GET', 'POST'])
 @app.route('/login/', methods=['GET', 'POST'])
 def login():
     frm = Login()
@@ -39,27 +41,39 @@ def login():
             flash("Usuario o contraseña no validos")
             return render_template('login.html', form=frm, titulo='Ingresar')
 
-
+@app.route("/Registrarse/")
 @app.route("/sign_in/")
 def sign():
     form = sign_in()
     return render_template('sign_in.html', form=form, titulo='Registro')
 
+@app.route("/usuario/")
 @app.route("/username/")
 def username():
     return 'username'
 
+@app.route("/favoritos/")
 @app.route("/favorites/")
 def favorites():
     return 'favorites'
 
+@app.route("/search/")
+@app.route("/buscar/")
+@app.route("/todos_los_Productos/")
 @app.route("/all_product/")
 def all_product():
+    form = search()
+    seh = form.seh
     return render_template('all_product.html', form=form, titulo='producto')
 
 @app.route("/shopping_car/")
 def shopping_car():
-    return render_template('shopping_car.html', form=form, titulo='producto')
+    return render_template('shopping_car.html', form=form, titulo='Carro de compras')
+
+@app.route("/producto/<string:name>/")
+@app.route("/producto/")
+def product(name="cafe del bueno"):
+    return render_template('product.html', titulo='producto')
 
 if __name__ == '__main__':
     app.run(debug=True)
