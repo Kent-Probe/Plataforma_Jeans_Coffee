@@ -196,12 +196,126 @@ header .navbar #principal:hover {
   align-items: center;
   margin-left: 10px;
 }
-/**/
+
+
+/*Plato individual*/
 .plato{
   border-radius: 5px;
   width: 30px;
   height: 30px;
 }
+.estrella{
+  margin-left: 10px;
+  color: #FFD700;
+}
+.circle{
+  color: gray;
+}
+
+.img-plato{
+  width: 100%;
+  height: 100%;
+
+  border-radius: 12px;
+}
+
+.content-plato{  
+  display: flex;
+}
+.item{
+  width: 40%;
+}
+
+.content{
+  margin-top: 12px;
+  margin-left: 10px;
+  margin-right: 10px;
+  display: flex;
+  justify-content: space-between;
+}
+.name-plate{
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 24px;
+}
+.name-price{
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 24px;
+  line-height: 21px;
+  letter-spacing: 0.21em;
+}
+.content-desc{
+  width: 70%;
+  margin-bottom: 20px;
+}
+.cont-info-plato{
+  margin-left: 30px;
+}
+.content-footer-plate {
+  justify-content: space-between;
+  margin-left: 10%;
+  margin-right: 10%;
+  display: flex;
+  
+}
+.content-circle{
+  margin-top: 15px;
+  justify-content: space-between;
+  width: 80px;
+  display: flex;
+}
+.content-add{
+  color: #FFFAFA;
+  background-color: var(--marronclaro);
+  padding: 1rem;
+  border-radius: 67px;
+}
+.content-add:hover{
+padding: 2rem;
+}
+.content{
+  margin-top: 12px;
+  margin-left: 10px;
+  margin-right: 10px;
+  display: flex;
+}
+.img-user{
+  width: 10rem;
+  height: 10rem;
+  border-radius: 50px;
+}
+.style-coment{
+  width: 90rem;
+  height: 11rem;
+
+  background: #FFFFFF;
+  border: 1px solid #8692A6;
+  box-sizing: border-box;
+  border-radius: 6px;
+}
+.nUser{
+  text-align: center;
+}
+.btn-publicar{
+  margin-right: 1rem;
+  width: 12rem;
+  height: 4rem;
+  background-color: #3B5998;
+  border-radius: 67px;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  color: #ffffff;
+}
+.content-cement{
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+
 
 
 
