@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, session, flash
 from markupsafe import escape
 from wtforms import form
-from forms import Login, sign_in, search, coment
+from forms import Login, sign_in, search, comentar
 import os
 
 app = Flask(__name__)
@@ -45,6 +45,15 @@ def login():
 @app.route("/sign_in/")
 def sign():
     form = sign_in()
+    nom = form.nom;
+    apl = form.apl;
+    ema = form.ema;
+    usr = form.usr;
+    ads = form.ads;
+    num = form.num;
+    cla = form.cla;
+    ver = form.ver;
+    btn = form.btn;
     return render_template('sign_in.html', form=form, titulo='Registro')
 
 @app.route("/usuario/")
@@ -73,7 +82,9 @@ def shopping_car():
 @app.route("/producto/<string:name>/")
 @app.route("/producto/")
 def product(name="cafe del bueno"):
-    return render_template('product.html', titulo='producto')
+    form = comentar()
+    coment = form.coment
+    return render_template('product.html', form=form, titulo='producto')
 
 if __name__ == '__main__':
     app.run(debug=True)
