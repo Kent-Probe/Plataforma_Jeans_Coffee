@@ -1,28 +1,35 @@
 {% extends 'base.html' %}
 {% block cuerpo %}
-<img class="imgLogin" src='{{ url_for("static", filename="img/chairs.jpg") }}' alt=''/>
-<frame>
-    <svg >
-        <ellipse cx="200" cy="80" rx="100" ry="50"/>
-    </svg> 
-    <form name='flogin' id='flogin' action='/login/' method='POST'>
-        <div class="frameLogin">
-            <div>
-                <div class='label'>{{ form.usr.label }}</div>
-                <div class='field'>{{ form.usr(minlength=5, maxlength=40, class="form-style")}}</div>
+    <!-- section header imagen -->
+    <section class="img-header-login">
+      <div class="banner">
+        <img src="{{url_for('static',filename='img/header.jpg')}}" class="foto-banner" alt="" />
+      </div>
+    </section>
+
+        <div class="formulario">
+            <div class="icon-login">
+              <img src="../static/img/imagen_usuario.png" alt="" class="icono-login">
             </div>
-            <div>
-                <div class='label'>{{ form.pwd.label }}</div>
-                <div class='field'>{{ form.pwd(minlength=5, maxlength=40)}}</div>
-            </div>
-            <div>
-                <a href='/recuperar/'>recuperar contraseña</a>
-            </div>
-            <div>
-                <div>&nbsp;</div>
-                <div>{{ form.btn() }}</div>
-            </div>
+          <div class="formulario-login">
+            <form action="" method="POST" class="form-login">
+              {{ form.csrf_token }}
+              {{ form.name(placeholder="Usuario", class="style-login") }}
+              <br>
+              {{ form.password(placeholder="Password",class="style-login") }}
+              <br>
+              <input type="submit" value="Login">
+              <a href="#">Has olvidado tu contraseña</a>
+            </form>
+          </div>
         </div>
-    </form>
-</frame>
-{% endblock %}
+
+    <script src="{{url_for('static',filename='js/script.js')}}"></script>
+
+{% endblock%}
+
+
+
+
+
+

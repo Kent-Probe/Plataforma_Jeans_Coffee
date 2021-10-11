@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% block cuerpo %}
+    <!-- section header imagen -->
+    <section class="Gplatos">
+        <div class="aside">
+            <div class="user">
+                <img src="{{ url_for('static',filename='img/foto.png')}}" class="fotico-dashboard" alt="" >
+                <p class="rol">ADMIN</p>
+            </div>
+            <div class="plataforma">
+                <h4>dashboard</h4>
+            </div>
+           
+             <nav class="navbar-aside"> 
+                <a href='/platos' class="dashboard-platos">Gestionar Platos</a>
+                <a href='/usuarios' class="dashboard-usuarios">Gestionar Usuarios</a>
+                <a href='/index'>Salir</a>
+            </nav> 
+
+        </div>
+        <div class="tabla">
+          <h1 class="title-platos">GESTI&Oacute;N DE PLATOS</h1>
+            <div class="buscar-plato">
+                <input type="text" class="buscar">
+                <input type="submit" class="btn_buscar" value="Buscar">
+            </div>
+              <table>
+                  <tr>
+                    <th>Foto</th>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Precio</th>
+                    <th>Disponibilidad</th>
+                    <th>Calificacion</th>
+                    <th>Comentario</th>
+                  </tr>
+                  <tr>
+                    <td>Alfreds Futterkiste</td>
+                    <td>Maria Anders</td>
+                    <td>Germany</td>
+                  </tr>
+                  <tr>
+                    <td>Centro comercial Moctezuma</td>
+                    <td>Francisco Chang</td>
+                    <td>Mexico</td>
+                  </tr>
+                </table>
+                <div class="botones">
+                  <input type="submit" value="Agregar">
+                  <input type="submit" value="Editar">
+                  <input type="submit" value="Eliminar">
+              </div>
+          </div> 
+    
+    </section>
+{% endblock %}
+
+
+
+
+
+
+
