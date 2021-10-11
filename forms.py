@@ -1,11 +1,12 @@
+from os import name
 from flask_wtf import FlaskForm
 from wtforms import PasswordField, SubmitField, TextField, IntegerField, TextAreaField
 from wtforms.fields.html5 import EmailField
 from wtforms.validators import InputRequired, Length, EqualTo
 
 class Login(FlaskForm):
-    usr = TextField('Usuario*',validators=[Length(min=5, max=40, message='Longitud fuera de rango'),InputRequired(message='Usuario es requerido')])
-    pwd = PasswordField('Clave*',validators=[Length(min=5, max=40, message='Longitud fuera de rango'),InputRequired(message='Clave es requerido')])
+    name = TextField('Usuario*',validators=[Length(min=5, max=40, message='Longitud fuera de rango'),InputRequired(message='Usuario es requerido')])
+    password = PasswordField('Clave*',validators=[Length(min=5, max=40, message='Longitud fuera de rango'),InputRequired(message='Clave es requerido')])
     btn = SubmitField('Ingresar')
 
 class sign_in(FlaskForm):
