@@ -28,7 +28,7 @@
             <a href="/home" class="logo">Gloria Jean's Coffees</a>
             <div class="fas fa-bars" id="menu-bar"></div>
             <nav class="navbar">
-                {% if 'usr_id' in session %}
+                {% if 'usuario' in session %}
                 <a href='/favorites'>Favoritos</a>
                 <a href='/usuario'>{{ usuario }}</a>
                 {% else %}  
