@@ -606,7 +606,71 @@ tr:nth-child(odd) {
   background: var(--marronclaro);
   padding: 1rem 0;
 }
- 
+/* Agregar plato - editar plato*/
+.content-sign-add-platos{
+  margin-top: 24px;
+}
+.style-sign-plate{
+  width: 30rem;
+  height: 5rem;
+
+  background: #FFFFFF;
+  border: 1px solid #1565D8;
+  box-sizing: border-box;
+  box-shadow: 0px 4px 10px 3px rgba(0, 0, 0, 0.11);
+  border-radius: 6px;
+  margin-bottom: 1rem;
+}
+.area .style-sign-plate{
+  height: 10rem;
+}
+.icon-upload{
+  position: absolute;
+  z-index: 100;
+  margin-top: 2.5rem;
+  margin-left: 25rem;
+}
+/* Carrito de compras*/
+.Gshopping{
+  padding: 2rem 0%;
+  width: 100%;
+  position: absolute;
+  top:40px;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+}
+.tabla{
+  padding: 2rem 9%;
+  width: 100%;
+}
+
+.table-shopping td, .table-shopping th{
+  border: 0px solid #ffffff;
+  text-align: left;
+  padding: 8px;
+}
+.table-shopping td{
+  background: linear-gradient(0deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.16)), #0F2330;
+  font-size: 14px;
+}
+.table-shopping th{
+  background: linear-gradient(0deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.14)), #0F2330;
+}
+.btn-delete input[type="submit"]{
+  position: absolute;
+  right:138px;
+  background: #DE4C4C;
+  color: #ffffff;
+  padding: 1rem 2rem;
+  margin-right: 3rem;
+  cursor: pointer;
+  border-radius: 5px;
+}
+.delete-one{
+  text-decoration: underline;
+  color: #FFCD29;
+}
 
 
 
