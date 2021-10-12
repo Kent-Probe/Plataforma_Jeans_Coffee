@@ -1,12 +1,33 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <a href='{{url_for("platos")}}'>platos</a>
-</body>
-</html>
+{% extends 'base.html' %}
+{% block cuerpo %}
+    <!-- section header imagen -->
+    <section class="Gshopping">
+        <div class="tabla"><br><br>
+          <h1 class="label-titulos">Carrito de compras</h1><br>
+              <table class="table-shopping">
+                  <tr>
+                    <th>Producto</th>
+                    <th>Cantidad</th>
+                    <th>Precio</th>
+                    <th>Eliminar</th>
+                  </tr>
+                  <tr>
+                    <td>Cafe del bueno</td>
+                    <td>1</td>
+                    <td>$12000</td>
+                    <td class="delete-one">Eliminar</td>
+                  </tr>
+                  <tr>
+                    <td>Cocoa calientica</td>
+                    <td>1</td>
+                    <td>$22000</td>
+                    <td class="delete-one">Eliminar</td>
+                  </tr>
+                </table>
+                <div class="btn-delete">
+                  <input type="submit" value="Eliminar">
+              </div>
+          </div> 
+    
+    </section>
+{% endblock %}
