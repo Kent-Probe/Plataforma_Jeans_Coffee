@@ -1,8 +1,8 @@
-from os import name
 from flask_wtf import FlaskForm
 from wtforms import PasswordField, SubmitField, TextField, IntegerField, TextAreaField
 from wtforms.fields.html5 import EmailField
 from wtforms.validators import InputRequired, Length, EqualTo
+from wtforms.widgets.core import TextArea
 
 class Login(FlaskForm):
     name = TextField('Usuario*',validators=[Length(min=5, max=40, message='Longitud fuera de rango'),InputRequired(message='Usuario es requerido')])
@@ -30,3 +30,9 @@ class search(FlaskForm):
 
 class comentar(FlaskForm):
     coment = TextAreaField('Comentario')
+
+class plate(FlaskForm):
+    pPlato = TextField('precio del plato')
+    nPlato = TextField('Nombre del plato')
+    dPlato = TextAreaField('Descripcion de plato')
+    aImgPlato = TextAreaField('Agregar imagen')
