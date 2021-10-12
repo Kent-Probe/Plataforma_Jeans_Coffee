@@ -10,14 +10,14 @@ class Login(FlaskForm):
     btn = SubmitField('Ingresar')
 
 class sign_in(FlaskForm):
-    nom = TextField('Nombres*',validators=[Length(min=1, max=100, message='Longitud fuera de rango'),InputRequired(message='Nombre es requerido')], )
-    apl = TextField('Apellidos*',validators=[Length(min=1, max=100, message='Longitud fuera de rango')])
+    nom = TextField('Nombres*',validators=[Length(min=5, max=50, message='Longitud fuera de rango'),InputRequired(message='Nombre es requerido')], )
+    apl = TextField('Apellidos*',validators=[Length(min=5, max=50, message='Longitud fuera de rango')])
 
-    ema = EmailField('Email*',validators=[InputRequired(message='Email es requerido')])
+    ema = EmailField('Email*',validators=[Length(min=5, max=40, message='Longitud fuera de rango'), InputRequired(message='Email es requerido')])
     usr = TextField('Usuario*',validators=[Length(min=5, max=40, message='Longitud fuera de rango'),InputRequired(message='Usuario es requerido')])
     
-    ads = TextField('Dirreccion*',validators=[InputRequired(message='la direccion es requerido')])
-    num = IntegerField('Numero*',validators=[InputRequired(message='El numero telefonico es requerido')])
+    ads = TextField('Dirreccion*',validators=[Length(min=5, max=40, message='Longitud fuera de rango'), InputRequired(message='la direccion es requerido')])
+    num = IntegerField('Numero*',validators=[Length(min=5, max=40, message='Longitud fuera de rango'), InputRequired(message='El numero telefonico es requerido')])
     
     
     cla = PasswordField('Clave*',validators=[Length(min=5, max=40, message='Longitud fuera de rango'),InputRequired(message='Clave es requerido')])

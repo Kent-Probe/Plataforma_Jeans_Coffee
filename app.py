@@ -13,30 +13,81 @@ app.secret_key = os.urandom(24)
 @app.route("/index/")
 @app.route("/")
 def index():
-    return render_template('index.html')
+    return render_template('index.html', usuario = os.name)
 
 #Pagina de inicar sesion
 @app.route('/Entrar/', methods=['GET', 'POST'])
 @app.route('/login/', methods=['GET', 'POST'])
 def login():
     form = Login()
-    return render_template('login.html', form=form, titulo='Ingresar')
+    if request.method=='GET':
+        return render_template('login.html', form=form, titulo='Ingresar')
+    else:
+        # 1. Recuperar los datos del formulario y le aplico transformaciones
+        name = form.name.data.strip()
+        password = form.password.data.strip()
+        # 2. Validar
+        sw = True
+        if len(name)<5 or len(name)>40:
+            flash("El nombre de usuario es requerido, longitud no valida [5-40]")
+            sw = False
+        if len(password)<5 or len(password)>40:
+            flash("El password es requerido, longitud no valida [5-40]")
+            sw = False
+        # 3. Ejecutar la acción
+        if sw and name=='pedro' and password=='pedro':
+            session['usuario'] = name
+            session['clave'] = password
+            return render_template("index.html")
+        else:
+            flash("Usuario o contraseña no validos")
+            return render_template('login.html', form=form, titulo='Ingresar')
 
 #Pagina de registrarse
-@app.route("/Registrarse/")
-@app.route("/sign_in/")
+@app.route("/Registrarse/",methods=['GET', 'POST'])
+@app.route("/sign_in/", methods=['GET', 'POST'])
 def sign():
     form = sign_in()
-    nom = form.nom;
-    apl = form.apl;
-    ema = form.ema;
-    usr = form.usr;
-    ads = form.ads;
-    num = form.num;
-    cla = form.cla;
-    ver = form.ver;
-    btn = form.btn;
-    return render_template('sign_in.html', form=form, titulo='Registro')
+    if request.method=='GET':
+        return render_template('sign_in.html', form=form, titulo='Registro')
+    else:
+        # Recuperar los datos del formulario
+        nom = form.nom.data.strip()
+        apl = form.apl.data.strip()
+        ema = form.ema.data.strip()
+        usr = form.usr.data.strip()
+        ads = form.ads.data.strip()
+        num = form.num.data
+        cla = form.cla.data.strip()
+        ver = form.ver.data.strip()
+
+        # Validar los datos
+        sw = True
+        if len(nom)<5 or len(nom)>40:
+            flash("El nombre es requerido, longitud no valida [5-40]")
+            sw = False
+        if len(apl)<5 or len(apl)>40:
+            flash("longitud no valida [5-40] para el apellido")
+            sw = False
+        if len(ema)<5 or len(ema)>40:
+            flash("El email es requerido, longitud no valida [5-40]")
+            sw = False
+        if len(usr)<5 or len(usr)>40:
+            flash("El usuario es requerido, longitud no valida [5-40]")
+            sw = False
+        if len(ads)<5 or len(ads)>40:
+            flash("la direccion es requerido, longitud no valida [5-40]")
+            sw = False
+        if len(cla)<5 or len(cla)>40:
+            flash("la clave es requerido, longitud no valida [5-40]")
+            sw = False
+        if ver != cla:
+            flash("No concuerdan las claves")
+            sw = False
+
+        # Ejecutar las acciones a lugar
+        if sw:
+            return render_template('index.html')
 
 #Pagina de usuario
 @app.route("/usuario/")
@@ -86,8 +137,8 @@ def usuarios():
     return render_template('usuarios.html', titulo='dashboard')
 
 #Pagina agregar platos
-@app.route('/dashboar/add_plate/')
-@app.route('/dashboar/agregar_platos/')
+@app.route('/dashboard/platos/add_plate/')
+@app.route('/dashboard/platos/agregar_plato/')
 def addPlatos():
     form = plate()
     nPlato = form.nPlato;
@@ -96,8 +147,9 @@ def addPlatos():
     aImgPlato = form.aImgPlato;
     return render_template('add_plate.html', form=form, titulo='dashboard')
 
-@app.route('/dashboar/edit_plate/')
-@app.route('/dashboar/editar_platos/')
+#editar plato
+@app.route('/dashboard/platos/edit_plate/')
+@app.route('/dashboard/platos/editar_plato/')
 def editPlato():
     form = plate()
     nPlato = form.nPlato;
@@ -105,6 +157,31 @@ def editPlato():
     dPlato = form.dPlato;
     aImgPlato = form.aImgPlato;
     return render_template('edit_plate.html', form=form, titulo='dashboard')
+
+#metodo para salir ;)
+@app.route('/salir/')
+def salir():
+    return render_template("index.html")
+
+#ver perfil
+@app.route('/profile/')
+@app.route('/profile/')
+def verPerfil():
+    session.clear()
+    return render_template("index.html")
+
+
+#editar Perfil
+@app.route('/editar_perfil/')
+@app.route('/edit_perfil/')
+def editProfile():
+    return render_template("index.html")
+
+#Cambiar contraseña
+@app.route('/change_password/')
+@app.route('/cambiar_contraseña/')
+def contraseña():
+    return render_template("index.html")
 
 
 if __name__ == '__main__':
