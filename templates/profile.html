@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% block cuerpo %}
+<div class="content-dashboard">
+    <section class="Gplatos">
+        <div class="aside">
+            <div class="user">
+                <img src="{{ url_for('static',filename='img/foto.png')}}" class="fotico-dashboard" alt="" >
+                <p class="rol">Usuario</p>
+            </div>
+            <div class="plataforma">
+                <h4>         Usuario</h4>
+            </div>
+            <nav class="navbar-aside"> 
+                <a href='/perfil/' class="dashboard-platos">Informacion del usuario</a>
+                <a href='/perfil/editar_perfil/' class="dashboard-usuarios">Editar perfil</a>
+                <a href='/perfil/cambiar_contraseña/' class="dashboard-usuarios">Ediar contraseña</a>
+                <a href='/salir'>Salir</a>
+            </nav> 
+        </div>
+    </section>
+    <section>
+        <div>
+            <div class="text-title"><h1>Información del Usuario</h1></div>
+            <div class="content-line">
+                <div class="line"></div>
+            </div>
+            <div class='content-sign-add-platos'>
+                <div class='content-sign'>
+                    <div>
+                        <div class="style-label-profile"><span>Usuario</span></div>
+                    </div>
+                </div>
+                <div class="style-line-negra"></div>
+                <div class='content-sign'>
+                    <div>
+                        <div class="style-label-profile"><span>Nombre y apellido</span></div>
+                    </div>
+                </div>
+                <div class="style-line-negra"></div>
+                <div class='content-sign'>
+                    <div>
+                        <div class="style-label-profile"><span>Numero de celular</span></div>
+                    </div>
+                </div>
+                <div class="style-line-negra"></div>
+                <div class='content-sign'>
+                    <div>
+                        <div class="style-label-profile"><span>Email</span></div>
+                    </div>
+                </div>
+                <div class="style-line-negra"></div>
+                <div class='content-sign'>
+                    <div>
+                        <div class="style-label-profile"><span>Direccion</span></div>
+                    </div>
+                </div>            
+                <div class="style-line-negra"></div>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}

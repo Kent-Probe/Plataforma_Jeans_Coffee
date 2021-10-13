@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% block cuerpo %}
+<div class="content-dashboard">
+    <section class="Gplatos">
+        <div class="aside">
+            <div class="user">
+                <img src="{{ url_for('static',filename='img/foto.png')}}" class="fotico-dashboard" alt="" >
+                <p class="rol">Usuario</p>
+            </div>
+            <div class="plataforma">
+                <h4>         Usuario</h4>
+            </div>
+            <nav class="navbar-aside"> 
+                <a href='/perfil/' class="dashboard-platos">Informacion del usuario</a>
+                <a href='/perfil/editar_perfil/' class="dashboard-usuarios">Editar perfil</a>
+                <a href='/perfil/cambiar_contraseña/' class="dashboard-usuarios">Ediar contraseña</a>
+                <a href='/salir'>Salir</a>
+            </nav> 
+        </div>
+    </section>
+    <section>
+        <div>
+            <div class="text-title"><h1>editar perfil</h1></div>
+            <div class="content-line">
+                <div class="line"></div>
+            </div>
+            <div class='content-sign-add-platos'>
+                <div class='content-sign'>
+                    <div>
+                        <div>{{ form.cla.label(class="style-sign-label") }}</div>
+                        <div>{{ form.cla(minlength=5, maxlength=40, class="style-sign-plate")}}</div>
+                    </div>
+                </div>
+                <div class='content-sign'>
+                    <div>
+                        <div>{{ form.ver.label(class="style-sign-label") }}</div>
+                        <div>{{ form.ver(minlength=5, maxlength=40, class="style-sign-plate")}}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}

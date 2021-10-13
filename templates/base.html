@@ -29,8 +29,8 @@
             <div class="fas fa-bars" id="menu-bar"></div>
             <nav class="navbar">
                 {% if 'usuario' in session %}
-                <a href='/favorites'>Favoritos</a>
-                <a href='/usuario'>{{ usuario }}</a>
+                <a href='/favoritos'>Favoritos</a>
+                <a href='/perfil'>usuario</a>
                 {% else %}  
                 <a href='/login'>Entrar</a>
                 <a href='/sign_in' id="principal">Registrarse</a>

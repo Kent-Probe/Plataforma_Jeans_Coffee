@@ -1,52 +1,75 @@
 {% extends 'base.html' %}
 {% block cuerpo %}
-<section class="Gplatos">
-    <div class="aside">
-        <div class="user">
-            <img src="{{ url_for('static',filename='img/foto.png')}}" class="fotico-dashboard" alt="" >
-            <p class="rol">ADMIN</p>
-        </div>
-        <div class="plataforma">
-            <h4>dashboard</h4>
-        </div>
-        <nav class="navbar-aside"> 
-            <a href='/dashboard/platos/' class="dashboard-platos">Gestionar Platos</a>
-            <a href='/usuario/' class="dashboard-usuarios">Gestionar Usuarios</a>
-            <a href='/index'>Salir</a>
-        </nav> 
-    </div>
-</section>
-<section>
-    <div>
-        <div class="text-title"><h1>Agregar plato</h1></div>
-        <div class="content-line">
-            <div class="line"></div>
-        </div>
-        <div class='content-sign-add-platos'>
-            <div class='content-sign'>
-                <div>
-                    <div>{{ form.nPlato.label(class="style-sign-label") }}</div>
-                    <div>{{ form.nPlato( minlength=1, maxlength=100, class="style-sign-plate", placeholder=" nombre")}}</div>
-                </div>
-                <div>
-                    <div>{{ form.pPlato.label(class="style-sign-label") }}</div>
-                    <div>{{ form.pPlato(minlength=5, maxlength=40, class="style-sign-plate", placeholder=" precio")}}</div>
-                </div>
+<div class="content-dashboard">
+    <section class="Gplatos">
+        <div class="aside">
+            <div class="user">
+                <img src="{{ url_for('static',filename='img/foto.png')}}" class="fotico-dashboard" alt="" >
+                <p class="rol">Usuario</p>
             </div>
-            <div class='content-sign'>
-                <div>
-                    <div>{{ form.dPlato.label(class="style-sign-label") }}</div>
-                    <div class="area">{{ form.dPlato( minlength=1, maxlength=100, class="style-sign-plate", placeholder=" descripcion del plato")}}</div>
-                </div>
-                <div>
-                    <div class="icon-upload">
-                        <i class="fas fa-upload fa-3x"></i>
+            <div class="plataforma">
+                <h4>         Usuario</h4>
+            </div>
+            <nav class="navbar-aside"> 
+                <a href='/perfil/' class="dashboard-platos">Informacion del usuario</a>
+                <a href='/perfil/editar_perfil/' class="dashboard-usuarios">Editar perfil</a>
+                <a href='/perfil/cambiar_contraseña/' class="dashboard-usuarios">Ediar contraseña</a>
+                <a href='/salir'>Salir</a>
+            </nav> 
+        </div>
+    </section>
+    <section>
+        <div>
+            <div class="text-title"><h1>editar perfil</h1></div>
+            <div class="content-line">
+                <div class="line"></div>
+            </div>
+            <div class='content-sign-add-platos'>
+                <div class='content-sign'>
+                    <div>
+                        <div>{{ form.nPorfile.label(class="style-sign-label") }}</div>
+                        <div>{{ form.nPorfile( minlength=1, maxlength=40, class="style-sign-plate")}}</div>
                     </div>
-                    <div>{{ form.aImgPlato.label(class="style-sign-label") }}</div>
-                    <div class="area">{{ form.aImgPlato(minlength=5, maxlength=40, class="style-sign-plate", placeholder=" imagen")}}</div>
+                    <div>
+                        <div>{{ form.aPellido.label(class="style-sign-label") }}</div>
+                        <div>{{ form.aPellido(minlength=5, maxlength=40, class="style-sign-plate")}}</div>
+                    </div>
+                </div>
+                <div class='content-sign'>
+                    <div>
+                        <div>{{ form.user.label(class="style-sign-label") }}</div>
+                        <div>{{ form.user( minlength=1, maxlength=100, class="style-sign-plate")}}</div>
+                    </div>
+                    <div>
+                        <div>{{ form.adress.label(class="style-sign-label") }}</div>
+                        <div>{{ form.adress(minlength=5, maxlength=40, class="style-sign-plate")}}</div>
+                    </div>
+                </div>
+                <div class='content-sign'>
+                    <div>
+                        <div>{{ form.ema.label(class="style-sign-label") }}</div>
+                        <div>{{ form.ema( minlength=1, maxlength=100, class="style-sign-plate")}}</div>
+                    </div>
+                    <div>
+                        <div>{{ form.verificarEma.label(class="style-sign-label") }}</div>
+                        <div>{{ form.verificarEma(minlength=5, maxlength=40, class="style-sign-plate")}}</div>
+                    </div>
+                </div>
+                <div class='content-sign'>
+                    <div>
+                        <div>{{ form.num.label(class="style-sign-label") }}</div>
+                        <div>{{ form.num( minlength=1, maxlength=100, class="style-sign-plate")}}</div>
+                    </div>
+                    <div>
+                        <div class="icon-upload">
+                            <i class="fas fa-upload fa-3x"></i>
+                        </div>
+                        <div>{{ form.imgUser.label(class="style-sign-label") }}</div>
+                        <div>{{ form.imgUser(minlength=5, maxlength=40, class="style-sign-plate")}}</div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
+</div>
 {% endblock %}

@@ -1,1 +1,63 @@
-<h1>usarios</h1>
+{% extends 'base.html' %}
+{% block cuerpo %}
+    <!-- section header imagen -->
+    <section class="Gplatos">
+        <div class="aside">
+            <div class="user">
+                <img src="{{ url_for('static',filename='img/foto.png')}}" class="fotico-dashboard" alt="" >
+                <p class="rol">ADMIN</p>
+            </div>
+            <div class="plataforma">
+                <h4>dashboard</h4>
+            </div>
+           
+             <nav class="navbar-aside"> 
+              <a href='/dashboard/platos/' class="dashboard-platos">Gestionar Platos</a>
+              <a href='/usuario/' class="dashboard-usuarios">Gestionar Usuarios</a>
+              <a href='/salir'>Salir</a>
+            </nav> 
+
+        </div>
+        <div class="tabla">
+          <h1 class="text-title">GESTI&Oacute;N DE USUARIOS</h1><br>
+            <div class="buscar-plato">
+                <input type="text" class="buscar">
+                <input type="submit" class="btn_buscar" value="Buscar">
+            </div>
+              <table>
+                  <tr>
+                    <th>Foto</th>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Precio</th>
+                    <th>Disponibilidad</th>
+                    <th>Calificacion</th>
+                    <th>Comentario</th>
+                  </tr>
+                  <tr>
+                    <td>Alfreds Futterkiste</td>
+                    <td>Maria Anders</td>
+                    <td>Germany</td>
+                  </tr>
+                  <tr>
+                    <td>Centro comercial Moctezuma</td>
+                    <td>Francisco Chang</td>
+                    <td>Mexico</td>
+                  </tr>
+                </table>
+                <div class="botones">
+                  <input type="submit" value="Agregar" href='/dashboard/platos/agregar_plato/'>
+                  <input type="submit" value="Editar" href='/dashboard/platos/editar_plato/'>
+                  <input type="submit" value="Eliminar">
+              </div>
+          </div> 
+    
+    </section>
+{% endblock %}
+
+
+
+
+
+
+
