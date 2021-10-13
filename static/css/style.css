@@ -468,8 +468,14 @@ padding: 2rem;
 }
 .content-sign{
   display: flex;
+  justify-content: space-between;
   flex-direction: row;
-  justify-content:space-around;
+}
+.content-sign-great{
+  width: 50%;
+  display: table;
+  position: absolute;
+  margin-left: 200px;
 }
 .style-btn-sign{
   color: white;
@@ -494,11 +500,12 @@ padding: 2rem;
 }
 
 /* sesion gestion platos */
-
+.content-dashboard{
+  display: flex;
+  flex-direction: row;
+}
 .Gplatos{
   padding: 2rem 0%;
-  width: 100%;
-  position: absolute;
   top:40px;
   color: #ffffff;
   display: flex;
@@ -611,7 +618,7 @@ tr:nth-child(odd) {
   margin-top: 24px;
 }
 .style-sign-plate{
-  width: 30rem;
+  width: 80%;
   height: 5rem;
 
   background: #FFFFFF;
@@ -620,6 +627,7 @@ tr:nth-child(odd) {
   box-shadow: 0px 4px 10px 3px rgba(0, 0, 0, 0.11);
   border-radius: 6px;
   margin-bottom: 1rem;
+  margin-right: 30rem;
 }
 .area .style-sign-plate{
   height: 10rem;
@@ -628,7 +636,7 @@ tr:nth-child(odd) {
   position: absolute;
   z-index: 100;
   margin-top: 2.5rem;
-  margin-left: 25rem;
+  margin-left: 23%;
 }
 /* Carrito de compras*/
 .Gshopping{
@@ -671,9 +679,51 @@ tr:nth-child(odd) {
   text-decoration: underline;
   color: #FFCD29;
 }
+/*Profile - Perfil*/
 
+.style-line-negra{
+  background-color:  #49423C;
+  border: 1px solid #49423C;
+  margin-bottom: 30px;
+}
+/* section favoritos */
 
+.favoritos{
+  background-color: #E5E5E5;
+  padding: 9rem 9%;
+}
+.contenido-favorito{
+  display: flex;
+  /* border: 1px solid red; */
+  margin-bottom: 2rem;
+}
+.titulo-lista{
+  color: var(--azul);
+}
 
+.ifavorito{
+  width: 25%;
+}
+.tfavorito{
+  margin-bottom: 4rem;
+  color:var(--azul) ;
+  font-size: 18px;
+  border: 3px solid #FFB800;
+  border-radius: 2rem;
+  width: 300px;
+  padding: 1rem;
+}
+
+.tfavorito i{
+ color: #FFB800;
+ margin-left: 3rem;
+ font-size: 25px;
+
+}
+
+.precio{
+  text-align: right;
+}
 
 
 
