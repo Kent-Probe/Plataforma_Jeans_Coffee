@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, session, flash
 from markupsafe import escape
 from wtforms import form
-from forms import Login, sign_in, search, comentar, plate
+from forms import Login, sign_in, search, comentar, plate, profile, password
 import os
 
 app = Flask(__name__)
@@ -13,7 +13,8 @@ app.secret_key = os.urandom(24)
 @app.route("/index/")
 @app.route("/")
 def index():
-    return render_template('index.html', usuario = os.name)
+
+    return render_template('index.html', usuario = 'name')
 
 #Pagina de inicar sesion
 @app.route('/Entrar/', methods=['GET', 'POST'])
@@ -99,7 +100,7 @@ def username():
 @app.route("/favoritos/")
 @app.route("/favorites/")
 def favorites():
-    return 'favorites'
+    return render_template('favoritos.html', titulo='favoritos')
 
 #Pagina de buscar - Todos los productos
 @app.route("/search/")
@@ -141,10 +142,7 @@ def usuarios():
 @app.route('/dashboard/platos/agregar_plato/')
 def addPlatos():
     form = plate()
-    nPlato = form.nPlato;
-    pPlato = form.pPlato;
-    dPlato = form.dPlato;
-    aImgPlato = form.aImgPlato;
+
     return render_template('add_plate.html', form=form, titulo='dashboard')
 
 #editar plato
@@ -152,36 +150,40 @@ def addPlatos():
 @app.route('/dashboard/platos/editar_plato/')
 def editPlato():
     form = plate()
-    nPlato = form.nPlato;
-    pPlato = form.pPlato;
-    dPlato = form.dPlato;
-    aImgPlato = form.aImgPlato;
+    nPlato = form.nPlato
+    pPlato = form.pPlato
+    dPlato = form.dPlato
+    aImgPlato = form.aImgPlato
     return render_template('edit_plate.html', form=form, titulo='dashboard')
 
 #metodo para salir ;)
 @app.route('/salir/')
 def salir():
-    return render_template("index.html")
-
-#ver perfil
-@app.route('/profile/')
-@app.route('/profile/')
-def verPerfil():
     session.clear()
     return render_template("index.html")
 
 
+#ver perfil
+@app.route('/perfil/')
+@app.route('/profile/')
+def verPerfil():
+    form = profile()
+    return render_template("profile.html", form=form)
+
+
 #editar Perfil
-@app.route('/editar_perfil/')
-@app.route('/edit_perfil/')
+@app.route('/perfil/editar_perfil/')
+@app.route('/profile/edit_perfil/')
 def editProfile():
-    return render_template("index.html")
+    form = profile()
+    return render_template("edit_profile.html", form=form)
 
 #Cambiar contraseña
-@app.route('/change_password/')
-@app.route('/cambiar_contraseña/')
+@app.route('/profile/change_password/')
+@app.route('/perfil/cambiar_contraseña/')
 def contraseña():
-    return render_template("index.html")
+    form = password()
+    return render_template("change_passsword.html", form=form)
 
 
 if __name__ == '__main__':

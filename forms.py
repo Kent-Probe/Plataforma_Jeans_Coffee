@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
 from wtforms import PasswordField, SubmitField, TextField, IntegerField, TextAreaField
 from wtforms.fields.html5 import EmailField
-from wtforms.validators import InputRequired, Length, EqualTo
+from wtforms.validators import Email, InputRequired, Length, EqualTo
 from wtforms.widgets.core import TextArea
 
 class Login(FlaskForm):
@@ -32,7 +32,21 @@ class comentar(FlaskForm):
     coment = TextAreaField('Comentario')
 
 class plate(FlaskForm):
-    pPlato = TextField('precio del plato')
-    nPlato = TextField('Nombre del plato')
-    dPlato = TextAreaField('Descripcion de plato')
-    aImgPlato = TextAreaField('Agregar imagen')
+    pPlato = TextField('precio del plato',validators=[InputRequired()])
+    nPlato = TextField('Nombre del plato',validators=[InputRequired()])
+    dPlato = TextAreaField('Descripcion de plato',validators=[InputRequired()])
+    aImgPlato = TextAreaField('imagen', validators=[InputRequired()])
+
+class profile(FlaskForm):
+    nPorfile = TextField('Nombre ',validators=[InputRequired()])
+    aPellido = TextField('Apeliido',validators=[InputRequired()])
+    user = TextField('usuario',validators=[InputRequired()])
+    adress = TextField('direccion',validators=[InputRequired()])
+    ema = EmailField('Email',validators=[Length(min=5, max=40, message='Longitud fuera de rango'), InputRequired(message='Email es requerido')])
+    verificarEma = EmailField('confirmar email',validators=[Length(min=5, max=40, message='Longitud fuera de rango'), InputRequired(message='Email es requerido'), EqualTo(ema, message='Las claves no corresponden')])
+    num = IntegerField('Numero',validators=[Length(min=5, max=40, message='Longitud fuera de rango'), InputRequired(message='El numero telefonico es requerido')])
+    imgUser = TextAreaField('imagen', validators=[InputRequired()])
+
+class password(FlaskForm):
+    cla = PasswordField('Clave*',validators=[Length(min=5, max=40, message='Longitud fuera de rango'),InputRequired(message='Clave es requerido')])
+    ver = PasswordField('Verificar clave*',validators=[Length(min=5, max=40, message='Longitud fuera de rango'),InputRequired(message='Clave es requerido'), EqualTo(cla, message='Las claves no corresponden')])
