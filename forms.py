@@ -1,8 +1,10 @@
 from flask_wtf import FlaskForm
-from wtforms import PasswordField, SubmitField, TextField, IntegerField, TextAreaField
+from flask_wtf.file import FileField, FileAllowed
+from wtforms import IntegerField, PasswordField, SubmitField,TextAreaField, TextField
 from wtforms.fields.html5 import EmailField
-from wtforms.validators import Email, InputRequired, Length, EqualTo
+from wtforms.validators import Email, EqualTo, InputRequired, Length
 from wtforms.widgets.core import TextArea
+
 
 class Login(FlaskForm):
     name = TextField('Usuario*',validators=[Length(min=5, max=40, message='Longitud fuera de rango'),InputRequired(message='Usuario es requerido')])
@@ -35,7 +37,9 @@ class plate(FlaskForm):
     pPlato = TextField('precio del plato',validators=[InputRequired()])
     nPlato = TextField('Nombre del plato',validators=[InputRequired()])
     dPlato = TextAreaField('Descripcion de plato',validators=[InputRequired()])
-    aImgPlato = TextAreaField('imagen', validators=[InputRequired()])
+    aImgPlato = FileField('Imagen', validators=[FileAllowed(['jpg', 'png'], 'Solo se permiten imágenes')])
+    
+    btn = SubmitField('Agregar platos')
 
 class profile(FlaskForm):
     nPorfile = TextField('Nombre ',validators=[InputRequired()])
