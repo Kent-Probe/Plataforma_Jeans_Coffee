@@ -1,12 +1,13 @@
-from ctypes import resize
-from flask import Flask, render_template, request, session, flash
-from markupsafe import escape
-from wtforms import form
-from forms import Login, sign_in, search, comentar, plate, profile, password
-from conexion import accion, seleccion
-from werkzeug.security import check_password_hash, generate_password_hash
-
 import os
+from werkzeug.utils import secure_filename
+
+from flask import Flask, flash, render_template, request, session
+from markupsafe import escape
+from werkzeug.security import check_password_hash, generate_password_hash
+from wtforms import form
+
+from conexion import accion, seleccion
+from forms import Login, comentar, password, plate, profile, search, sign_in
 
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
@@ -17,8 +18,13 @@ app.secret_key = os.urandom(24)
 @app.route("/index/")
 @app.route("/")
 def index():
-    sql = 'SELECT imagen, nombre, descripcion, valor FROM producto'
-    return render_template('index.html')
+    sql = f'SELECT *FROM plato LIMIT 6'
+    res = seleccion(sql)
+
+    sql3 = f'SELECT *FROM plato ORDER BY cod_plato DESC LIMIT 3'
+    res3 = seleccion(sql3)
+    
+    return render_template('index.html', res=res, res3=res3)
 
 
 #Pagina de inicar sesion
@@ -110,13 +116,7 @@ def sign():
             else:
                 print('ERROR: Por favor reintente')
             return render_template('sign_in.html', form=form, titulo='Registro')
-
-#Pagina de usuario
-@app.route("/usuario/")
-@app.route("/username/")
-def username():
-    return render_template('usuarios.html', titulo='usuario')
-
+            
 #Pagina de favoritos
 @app.route("/favoritos/")
 @app.route("/favorites/")
@@ -130,7 +130,8 @@ def favorites():
 @app.route("/all_product/")
 def all_product():
     form = search()
-    seh = form.seh
+    seh = form.seh.data
+    
     return render_template('all_product.html', form=form, titulo='producto')
 
 #Pagina de caro de compras
@@ -139,24 +140,37 @@ def shopping_car():
     return render_template('shopping_car.html', form=form, titulo='Carro de compras')
 
 #Pagina de producto en especifico
-@app.route("/producto/<string:name>/")
 @app.route("/producto/")
 def product(name="cafe del bueno"):
+    param = request.args.get('plate','1')
     form = comentar()
     coment = form.coment
     return render_template('product.html', form=form, titulo='producto')
 
 #Pagina de dashboard platos
-@app.route('/dashboard/')
-@app.route('/dashboard/platos/')
+@app.route('/dashboard/', methods=['GET', 'POST'])
+@app.route('/dashboard/platos/', methods=['GET', 'POST'])
 def platos():
     form = search()
-    return render_template('platos.html', form=form, titulo='dashboard')
+    if request.method == 'GET':
+        sql = "SELECT * FROM plato"
+        res = seleccion(sql)
+
+        return render_template('platos.html', form=form, titulo='dashboard', res=res)
+    else:
+        return render_template('platos.html', form=form, titulo='dashboard')
 
 #Pagina de dashboard gestion usuario
-@app.route('/dashboard/usuarios/')
+@app.route('/dashboard/usuarios/', methods=['GET', 'POST'])
 def usuarios():
-    return render_template('usuarios.html', titulo='dashboard')
+    form = search()
+    if request.method == 'GET':
+        sql = "SELECT * FROM usuario"
+        res = seleccion(sql)
+
+        return render_template('usuarios.html', form=form, titulo='dashboard', res=res)
+    else:
+        return render_template('usuarios.html', form=form, titulo='dashboard')
 
 #Pagina agregar platos
 @app.route('/dashboard/platos/add_plate/', methods=['GET', 'POST'])
@@ -166,32 +180,65 @@ def addPlatos():
     if request.method=='GET':
         return render_template('add_plate.html', form=form, titulo='Agregar plato')
     else:
-        nom = form.nPlato
-        val = form.pPlato
-        des = form.dPlato
-        img = form.aImgPlato
+        f = request.files['aImgPlato']
+        nom = secure_filename(f.filename)
+        img = f'uploads/{nom}'
+        f.save(f'static/{img}')
+        nom = form.nPlato.data.strip()
+        val = form.pPlato.data.strip()
+        des = form.dPlato.data.strip()
+
+        #img = form.aImgPlato.data
+
+
+
         # Preparar la consulta
-        sql = "INSERT INTO plato(nombre, descripcion, valor) VALUES (?, ?, ?)",("nom", "des", "10000")
+        sql = "INSERT INTO plato(nombre, descripcion, valor, imagen) VALUES (?, ?, ?, ?)"
         # Ejecutar la consulta
-        res = accion(sql,( nom, des, val))
-        print(sql)
-        # Procesar la respuesta
-        #if res!=0:
-        #    print('INFO: Datos almacenados con exito')
-        #else:
-        #    print('ERROR: Por favor reintente')
-        return render_template('add_plate.html', form=form, titulo='dashboard')
+        res = accion(sql,( nom, des, val, img))
+        #Procesar la respuesta
+        if res!=0:
+            print('INFO: Datos almacenados con exito')
+        else:
+            print('ERROR: Por favor reintente')
+        return render_template('add_plate.html', form=form, titulo='Agregar plato')
+
+
 
 #editar plato
-@app.route('/dashboard/platos/edit_plate/')
-@app.route('/dashboard/platos/editar_plato/')
+@app.route('/dashboard/platos/edit_plate/', methods=['GET', 'POST'])
+@app.route('/dashboard/platos/editar_plato/', methods=['GET', 'POST'])
 def editPlato():
     form = plate()
-    nPlato = form.nPlato
-    pPlato = form.pPlato
-    dPlato = form.dPlato
-    aImgPlato = form.aImgPlato
-    return render_template('edit_plate.html', form=form, titulo='dashboard')
+    if request.method=='GET':
+        sql = "SELECT * FROM plato WHERE nombre= 'nombre'"
+
+        res = seleccion(sql)
+        for i in res:
+            form.nPlato.data = i[2]
+            form.pPlato.data = i[-1]
+            form.dPlato.data = i[4]
+        return render_template('edit_plate.html', form=form, titulo='Editar plato')
+    else:
+        nom = form.nPlato.data.strip()
+        val = form.pPlato.data.strip()
+        des = form.dPlato.data.strip()
+
+        f = request.files['aImgPlato']
+        nom = secure_filename(f.filename)
+        img = f'uploads/{nom}'
+        f.save(f'static/{img}')
+
+        # Preparar la consulta
+        sql="UPDATE plato SET nombre=?, descripcion=?,valor=?, img=? WHERE nombre='nombre'"
+        # Ejecutar la consulta
+        res = accion(sql,( nom, des, val, img))
+        #Procesar la respuesta
+        if res!=0:
+            print('INFO: Datos almacenados con exito')
+        else:
+            print('ERROR: Por favor reintente')
+        return render_template('edit_plate.html', form=form, titulo='Editar plato')
 
 #metodo para salir ;)
 @app.route('/salir/')

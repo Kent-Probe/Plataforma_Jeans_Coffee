@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
-from flask_wtf.file import FileField, FileAllowed
-from wtforms import IntegerField, PasswordField, SubmitField,TextAreaField, TextField
+from flask_wtf.file import FileAllowed
+from wtforms import IntegerField, PasswordField, SubmitField,TextAreaField, TextField, FileField
 from wtforms.fields.html5 import EmailField
 from wtforms.validators import Email, EqualTo, InputRequired, Length
 from wtforms.widgets.core import TextArea
@@ -37,9 +37,10 @@ class plate(FlaskForm):
     pPlato = TextField('precio del plato',validators=[InputRequired()])
     nPlato = TextField('Nombre del plato',validators=[InputRequired()])
     dPlato = TextAreaField('Descripcion de plato',validators=[InputRequired()])
-    aImgPlato = FileField('Imagen', validators=[FileAllowed(['jpg', 'png'], 'Solo se permiten imágenes')])
+    aImgPlato = FileField('Imagen', validators=[FileAllowed(['jpg', 'png', 'jpeg'], 'Solo se permiten imágenes')])
     
     btn = SubmitField('Agregar platos')
+    btnE = SubmitField('Editar')
 
 class profile(FlaskForm):
     nPorfile = TextField('Nombre ',validators=[InputRequired()])
@@ -54,3 +55,6 @@ class profile(FlaskForm):
 class password(FlaskForm):
     cla = PasswordField('Clave*',validators=[Length(min=5, max=40, message='Longitud fuera de rango'),InputRequired(message='Clave es requerido')])
     ver = PasswordField('Verificar clave*',validators=[Length(min=5, max=40, message='Longitud fuera de rango'),InputRequired(message='Clave es requerido'), EqualTo(cla, message='Las claves no corresponden')])
+
+#class table(FlaskForm):
+    
