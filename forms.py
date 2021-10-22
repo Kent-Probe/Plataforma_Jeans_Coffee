@@ -3,7 +3,7 @@ from flask_wtf.file import FileAllowed
 from wtforms import IntegerField, PasswordField, SubmitField,TextAreaField, TextField, FileField
 from wtforms.fields.html5 import EmailField
 from wtforms.validators import Email, EqualTo, InputRequired, Length
-from wtforms.widgets.core import TextArea
+from wtforms.widgets.core import SubmitInput, TextArea
 
 
 class Login(FlaskForm):
@@ -51,10 +51,13 @@ class profile(FlaskForm):
     verificarEma = EmailField('confirmar email',validators=[Length(min=5, max=40, message='Longitud fuera de rango'), InputRequired(message='Email es requerido'), EqualTo(ema, message='Las claves no corresponden')])
     num = IntegerField('Numero',validators=[Length(min=5, max=40, message='Longitud fuera de rango'), InputRequired(message='El numero telefonico es requerido')])
     imgUser = TextAreaField('imagen', validators=[InputRequired()])
+    btn = SubmitField('Editar')
 
 class password(FlaskForm):
+    claV = PasswordField('Clave*',validators=[Length(min=5, max=40, message='Longitud fuera de rango'),InputRequired(message='Clave es requerido')])
     cla = PasswordField('Clave*',validators=[Length(min=5, max=40, message='Longitud fuera de rango'),InputRequired(message='Clave es requerido')])
     ver = PasswordField('Verificar clave*',validators=[Length(min=5, max=40, message='Longitud fuera de rango'),InputRequired(message='Clave es requerido'), EqualTo(cla, message='Las claves no corresponden')])
+    btn = SubmitField('Editar')
 
 #class table(FlaskForm):
     

@@ -1,5 +1,5 @@
 import sqlite3
-URL_DB = 'jeans_coffee.db'
+URL_DB = 'static/baseDatos/jeans_coffee.db'
 
 def seleccion(sql) -> list:
     #Ejecuta una consulta de selección sobre la base de datos
@@ -20,6 +20,5 @@ def accion(sql, datos) -> int:
             if res!=0:
                 con.commit()
     except Exception:
-        print("Error")
         res = 0
     return res
