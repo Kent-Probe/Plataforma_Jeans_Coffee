@@ -450,12 +450,16 @@ padding: 2rem;
   display: flex;
   flex-direction: row-reverse;
 }
-.text-title{
+.text-title, .text-title-profile{
   margin-top: 5rem;
   font-size: 20px;
   display: flex;
   justify-content: left;
   color: #06496E;
+}
+.text-title-profile{
+  display: flex;
+  justify-content: center;
 }
 .line{
   width: 50rem;
@@ -532,6 +536,7 @@ padding: 2rem;
 .tabla{
   padding: 2rem 9%;
   width: 100%;
+  margin-left: 100px;
 }
 
 .aside{
@@ -669,9 +674,7 @@ tr:nth-child(odd) {
   font-weight: bolder;
 }
 .tabla{
-  padding: 2rem 9%;
-  width: 100%;
-  margin-left: 100px;
+
 }
 
 .table-shopping td, .table-shopping th{
@@ -751,6 +754,7 @@ tr:nth-child(odd) {
   padding: 2rem 30rem;
   width: 100%;
 }
+/*Espacion*/
 
 
 
