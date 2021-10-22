@@ -125,6 +125,7 @@ header .navbar #principal:hover {
   text-transform: uppercase;
   font-weight: bolder;
 }
+
 .product span {
   color: var(--marron);
 }
@@ -150,8 +151,14 @@ header .navbar #principal:hover {
   transform: scale(1.1);
   transition: all .2s linear;
 }
+.title-nombre-plato{
+  margin-left: 10px;
+  color: #000;
+
+}
  
 .description{
+  color: #000;
   margin-top: 2rem;
   font-size: 1.5rem;
   text-align: left;
@@ -259,12 +266,9 @@ header .navbar #principal:hover {
   justify-content: center;
   align-items: flex-start;
   padding: 18px 26px;
-  
   width: 120%;
   height: 60px;
-
   margin-bottom: 15px;
-  
   background: #FFFFFF;
   border: 1px solid #EEEEEE;
   box-sizing: border-box;
@@ -281,8 +285,14 @@ header .navbar #principal:hover {
 
 /*Buscar*/
 .buscar{
-  margin-top: 78px;
+  margin-top: 1px;
   color: black;
+  border: 2px solid var(--marron);
+  width: 40%;
+  margin-bottom: 2rem;
+  padding: .2rem;
+
+
 }
 .form-style-buscar{
   background: #FFFAFA;
@@ -297,7 +307,7 @@ header .navbar #principal:hover {
   font-weight: normal;
   font-size: 24px;
   line-height: 36px;
-  
+  margin-top: 50PX;
   color: #06496E;
 }
 .rectangulo{
@@ -363,7 +373,7 @@ header .navbar #principal:hover {
   font-weight: bold;
   font-size: 24px;
   line-height: 21px;
-  letter-spacing: 0.21em;
+  letter-spacing: 0.1em;
 }
 .content-desc{
   width: 70%;
@@ -390,6 +400,13 @@ header .navbar #principal:hover {
   background-color: var(--marronclaro);
   padding: 1rem;
   border-radius: 67px;
+  cursor: pointer;
+  
+}
+.content-add a{
+  color: #FFFAFA;
+ 
+  
 }
 .content-add:hover{
 padding: 2rem;
@@ -427,16 +444,17 @@ padding: 2rem;
   display: flex;
   justify-content: center;
   color: #ffffff;
+  cursor: pointer;
 }
 .content-cement{
   display: flex;
   flex-direction: row-reverse;
 }
 .text-title{
-  margin-top: 10rem;
+  margin-top: 5rem;
   font-size: 20px;
   display: flex;
-  justify-content: center;
+  justify-content: left;
   color: #06496E;
 }
 .line{
@@ -469,6 +487,7 @@ padding: 2rem;
   display: flex;
   justify-content: space-between;
   flex-direction: row;
+  margin-left: 7rem;
 }
 .content-sign-great{
   width: 50%;
@@ -519,6 +538,8 @@ padding: 2rem;
   background-color:var(--marron);
   width: 18rem;
   max-height:120vh;
+  position: fixed;
+  top: 60px;
 }
 
 .user{
@@ -559,6 +580,7 @@ td{
   font-size: 14px;
   color: #000;
 }
+
 th{
   background-color: var(--marronclaro);
   text-align: center;
@@ -593,12 +615,6 @@ tr:nth-child(odd) {
   display: flex;
 }
  
-.buscar{
-  margin-left: 0;
-  margin-bottom: 2rem;
-  padding: .5rem;
-  width: 40%;
-}
 
 .btn_buscar{
   background-color: var(--marronclaro);
@@ -607,6 +623,7 @@ tr:nth-child(odd) {
   color: #ffffff;
   border: 1px solid var(--marronclaro);
   border-radius: .6rem;
+  cursor: pointer;
 }
 .dashboard-platos{
   background: var(--marronclaro);
@@ -647,9 +664,14 @@ tr:nth-child(odd) {
   display: flex;
   align-items: center;
 }
+.cantidad{
+  font-size: 20px;
+  font-weight: bolder;
+}
 .tabla{
   padding: 2rem 9%;
   width: 100%;
+  margin-left: 100px;
 }
 
 .table-shopping td, .table-shopping th{
@@ -675,8 +697,9 @@ tr:nth-child(odd) {
   border-radius: 5px;
 }
 .delete-one{
-  text-decoration: underline;
+  text-decoration: none;
   color: #FFCD29;
+  cursor: pointer;
 }
 /*Profile - Perfil*/
 
@@ -724,6 +747,10 @@ tr:nth-child(odd) {
   text-align: right;
 }
 
+.add_platicos{
+  padding: 2rem 30rem;
+  width: 100%;
+}
 
 
 
