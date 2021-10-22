@@ -20,7 +20,7 @@
       <div class="content-box">
         {% for i in res %}
         <div class="box">
-          <a href="/producto/?plate={{ i[4] }}"><img src="{{url_for('static',filename=i[1])}}" class="img" alt="plato2" /></a>
+          <a href="/producto/?plate={{ i[0] }}"><img src="{{url_for('static',filename=i[1])}}" class="img" alt="plato2" /></a>
           <div class="contenido">
             <p class="description"> {{ i[5]}} </p> 
             </p>
