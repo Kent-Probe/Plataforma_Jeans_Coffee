@@ -160,8 +160,7 @@ def favorites():
 @app.route("/all_product/")
 def all_product():
     form = search()
-    seh = form.seh.data.strip()
-
+    seh = form.seh.data
     param = request.args.get('seh', seh)
     if param:
         sql = f"SELECT * FROM plato WHERE nombre LIKE '{param}%'"
@@ -207,8 +206,11 @@ def delete_all():
 def product():
     param = request.args.get('plate','zumo')
     form = comentar()
-    if request.method == 'GET':    
-        sql = f'SELECT * FROM plato WHERE nombre="{param}"'
+    if request.method == 'GET':
+        if param:
+            sql = f'SELECT * FROM plato WHERE nombre="{param}"'
+        else:
+            sql = f'SELECT * FROM plato WHERE cod_plato=1'
         print(sql)
         res = seleccion(sql)
         print(res)
