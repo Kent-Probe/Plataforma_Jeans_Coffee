@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- link css -->
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/style.css')}}"/>
+
+    <!-- link font awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+    />
+    
+    <!-- link de favicon -->
+    <link rel="icon" href="{{ url_for('static',filename='img/favicon.png')}}">
+
+    {% if titulo %}
+    <title>{{ titulo }}</title>
+    {% else %}
+    <title>Glorian Jean's Coffee</title>
+    {% endif %}
+</head>
+    <body>
+        <header>
+            <a href="/home" class="logo">Gloria Jean's Coffees</a>
+            <div class="fas fa-bars" id="menu-bar"></div>
+            <nav class="navbar">
+                {% if 'user' in session %}
+                <a href='/favoritos'>Favoritos</a>
+                <a href='/perfil'>{{ session['user'] }}</a>
+                {% else %}  
+                <a href='/login'>Entrar</a>
+                <a href='/sign_in' id="principal">Registrarse</a>
+                {% endif %}
+                <a href='/shopping_car' id="carrito"><i class="fas fa-shopping-cart"></i> </a>
+                <a href="/buscar" id="buscar"><i class="fas fa-search"></i> </a>
+            </nav>
+        </header>
+        <script src="{{url_for('static',filename='js/script.js')}}"></script>
+        <div >
+           {% block cuerpo %}{% endblock %}
+        </div>
+    </body>
+</html>

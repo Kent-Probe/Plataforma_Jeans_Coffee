@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% block cuerpo %}
+<div class="content-dashboard">
+    <section class="Gplatos">
+        <div class="aside">
+            <div class="user">
+                <img src="{{ url_for('static',filename='img/foto.png')}}" class="fotico-dashboard" alt="" >
+                <p class="rol">Usuario</p>
+            </div>
+            <div class="plataforma">
+                <h4>{{ res[0][8] }}</h4>
+            </div>
+            <nav class="navbar-aside"> 
+                <a href='/perfil/' class="dashboard-platos">Informacion del usuario</a>
+                <a href='/perfil/editar_perfil/' class="dashboard-usuarios">Editar perfil</a>
+                <a href='/perfil/cambiar_contraseña/' class="dashboard-usuarios">Ediar contraseña</a>
+                <a href='/salir'>Salir</a>
+            </nav> 
+        </div>
+    </section>
+    <section>
+        <div>
+            <div class="text-title"><h1>Información del Usuario</h1></div>
+            <div class="content-line">
+                <div class="line"></div>
+            </div>
+            <div class='content-sign-add-platos'>
+                <div class='content-sign'>
+                    <div>
+                        <div class="style-label-profile"><span>Usuario: &NonBreakingSpace; <b> {{ res[0][6]}} </b></span></div>
+                    </div>
+                </div>
+                <div class="style-line-negra"></div>
+                <div class='content-sign'>
+                    <div>
+                        <div class="style-label-profile"><span>Nombre y apellido:&NonBreakingSpace; <b> {{ res[0][1] }} {{ res[0][2] }} </b></span></div>
+                    </div>
+                </div>
+                <div class="style-line-negra"></div>
+                <div class='content-sign'>
+                    <div>
+                        <div class="style-label-profile"><span>Numero de celular: &NonBreakingSpace; <b> {{ res[0][3]}} </b></span></div>
+                    </div>
+                </div>
+                <div class="style-line-negra"></div>
+                <div class='content-sign'>
+                    <div>
+                        <div class="style-label-profile"><span>Email: &NonBreakingSpace; <b> {{ res[0][5]}} </b></span></div>
+                    </div>
+                </div>
+                <div class="style-line-negra"></div>
+                <div class='content-sign'>
+                    <div>
+                        <div class="style-label-profile"><span>Direccion: &NonBreakingSpace; <b> {{ res[0][4]}} </b></span></div>
+                    </div>
+                </div>            
+                <div class="style-line-negra"></div>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}

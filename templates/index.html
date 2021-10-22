@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+{% block cuerpo %}
+
+    <!-- section header imagen -->
+    <section class="img-header">
+      <div class="banner">
+        <img src="{{url_for('static',filename='img/chairs.jpg')}}" class="foto-banner" alt="" />
+      </div>
+    </section>
+
+    <!-- section nuestros productos -->
+
+    <section class="nproductos">
+      <h2 class="product">Nuestros  Productos </h2>
+      <div class="content-box">
+        {% for i in res  %}
+        <div class="box">
+          <a href="/producto/?plate={{ i[2] }}"><img src="{{url_for('static',filename=i[1])}}" class="img" alt="plato2" /></a>
+          <div class="contenido">
+            <p class="description"> {{ i[5]}} </p> 
+            </p>
+            <p class="precio">${{ i[6] }}</p>
+            <div class="estrellas">
+              {% for y in range(i[4]|int) %}
+              <a class="estrella">&#9733 {% endfor %}<span class="puntaje">  {{ i[4] }}</span></a>
+            
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+
+      </div>
+<div class="boton">
+    <a href='/all_product' class="btn">ver todos</a>
+
+</div>
+    </section>
+
+    <!-- imagen secundaria -->
+    <section class="img-secundaria">
+        <div class="contenido">
+            <h2 class="text-secundario">Aprovecha 50% de descuento en nuestras bebidas</h2>
+        </div>
+        <div class="boton">
+          <a href='' class="btn">Clic!</a>
+      
+      </div>
+
+    </section>
+       <!-- especiales del mes -->
+    <section class="especiales">
+        <h2 class="product">Especiales del Mes </h2>
+        <div class="content-box">
+          {% for i in res3  %}
+          <div class="box">
+            <a href="/producto/?plate={{ i[2] }}"><img src="{{url_for('static',filename=i[1])}}" class="img" alt="plato2" /></a>
+            <div class="contenido">
+              <p class="description"> {{ i[5]}} </p> 
+              </p>
+              <p class="precio">${{ i[6] }}</p>
+              <div class="estrellas">
+                {% for y in range(i[4]|int) %}
+                <a class="estrella">&#9733 {% endfor %}<span class="puntaje">  {{ i[4] }}</span></a>
+              
+              </div>
+            </div>
+          </div>
+          {% endfor %}  
+        </div>
+        </section>
+
+          <!-- footer -->
+            <footer>
+              <section class="footer">
+                <a href="#" class="logo">Gloria Jean's Coffees</a>
+                <div class="icon-social">
+                  <a href="https://twitter.com/?lang=es"><i class="fab fa-twitter-square"></i></a>
+                  <a href="https://es-la.facebook.com/"><i class="fab fa-facebook-square"></i></a>
+                  <a href="https://www.instagram.com/?hl=es"><i class="fab fa-instagram-square"></i></a>
+                </div>                  
+                <a href="/terms_conditions/">Terminos y condiciones</a>
+                 
+              </section>
+
+            </footer>
+    <script src="{{url_for('static',filename='js/script.js')}}"></script>
+{% endblock %}

@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% block cuerpo %}
+<div class="content-dashboard">
+    <section class="Gplatos">
+        <div class="aside">
+            <div class="user">
+                <img src="{{ url_for('static',filename='img/foto.png')}}" class="fotico-dashboard" alt="" >
+                <p class="rol">Usuario</p>
+            </div>
+            <div class="plataforma">
+                <h4>         Usuario</h4>
+            </div>
+            <nav class="navbar-aside"> 
+                <a href='/perfil/' class="dashboard-usuarios">Informacion del usuario</a>
+                <a href='/perfil/editar_perfil/' class="dashboard-usuarios">Editar perfil</a>
+                <a href='/perfil/cambiar_contraseña/' class="dashboard-platos">Ediar contraseña</a>
+                <a href='/salir'>Salir</a>
+            </nav> 
+        </div>
+    </section>
+    <section>
+        <form name='fpsw' id='fpsw' action='/profile/edit_perfil/' method='POST'>
+            <div>
+                <div class="text-title"><h1>editar perfil</h1></div>
+                <div class="content-line">
+                    <div class="line"></div>
+                </div>
+                <div class='content-sign-add-platos'>
+                    <div class='content-sign'>
+                        <div>
+                            <div >&nbsp;</div>
+                            <div>{{ form.claV.label(class="style-sign-label") }}</div>
+                            <div>{{ form.claV(minlength=5, maxlength=40, class="style-sign-plate")}}</div>
+                        </div>
+                    </div>
+                    <div class='content-sign'>
+                        <div>
+                            <div >&nbsp;</div>
+                            <div>{{ form.cla.label(class="style-sign-label") }}</div>
+                            <div>{{ form.cla(minlength=5, maxlength=40, class="style-sign-plate")}}</div>
+                        </div>
+                    </div>
+                    <div class='content-sign'>
+                        <div>
+                            <div >&nbsp;</div>
+                            <div>{{ form.ver.label(class="style-sign-label") }}</div>
+                            <div>{{ form.ver(minlength=5, maxlength=40, class="style-sign-plate")}}</div>
+                        </div>
+                    </div>
+                    <div class="content-line">
+                        <div >&nbsp;</div>
+                        <div >{{ form.btn(class='style-btn-sign') }}</div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </section>
+</div>
+{% endblock %}

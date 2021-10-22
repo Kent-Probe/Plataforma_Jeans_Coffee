@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block cuerpo %}
+    <!-- section header imagen -->
+    <section class="Gshopping">
+        <div class="tabla"><br><br>
+          <h1 class="label-titulos">Carrito de compras</h1><br>
+              <table >
+                  <tr>
+                    <th>Producto</th>
+                    <th>Cantidad</th>
+                    <th>Precio</th>
+                    <th>Total</th>
+
+                    <th>Eliminar</th>
+                  </tr>
+                  {% for c in dato %}
+                  <tr>
+                    <td>{{c[1]}}</td>
+                    <td>{{c[2]}}</td>
+                    <td>{{c[3]}}</td>
+                    <td>{{c[4]}}</td>
+
+                    <td class="delete-one"> <a href='/delete/{{c[0]}}'>Eliminar</a></td>
+                  </tr>
+                  {% endfor %}
+                </table>
+                <div class="btn-delete">
+                  <a href="/delete_all"><input type="submit" value="Eliminar todo"></a>
+              </div>
+          </div> 
+    </section>
+{% endblock %}

@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% block cuerpo %}
+<div class="content-dashboard">
+    <section class="Gplatos">
+        <div class="aside">
+            <div class="user">
+                <img src="{{ url_for('static',filename='img/foto.png')}}" class="fotico-dashboard" alt="" >
+                <p class="rol">Usuario</p>
+            </div>
+            <div class="plataforma">
+                <h4>Usuario</h4>
+            </div>
+            <nav class="navbar-aside"> 
+                <a href='/perfil/' class="dashboard-usuarios">Informacion del usuario</a>
+                <a href='/perfil/editar_perfil/' class="dashboard-platos">Editar perfil</a>
+                <a href='/perfil/cambiar_contraseña/' class="dashboard-usuarios">Ediar contraseña</a>
+                <a href='/salir'>Salir</a>
+            </nav> 
+        </div>
+    </section>
+    <section>
+        <form name='feditP' id='feditP' action='/profile/edit_perfil/' method='POST'>
+            <div>
+                <div class="text-title"><h1>Editar perfil</h1></div>
+                <div class="content-line">
+                    <div class="line"></div>
+                </div>
+                <div class='content-sign-add-platos'>
+                    <div class='content-sign'>
+                        <div>
+                            <div>{{ form.nPorfile.label(class_="style-sign-label") }}</div>
+                            <div>{{ form.nPorfile( minlength=5, maxlength=40, class="style-sign-plate") }}</div>
+                        </div>
+                        <div>
+                            <div>{{ form.aPellido.label(class_="style-sign-label") }}</div>
+                            <div>{{ form.aPellido(minlength=5, maxlength=40, class="style-sign-plate") }}</div>
+                        </div>
+                    </div>
+                    <div class='content-sign'>
+                        <div>
+                            <div>{{ form.num.label(class_="style-sign-label") }}</div>
+                            <div>{{ form.num( minlength=1, maxlength=100, class="style-sign-plate") }}</div>
+                        </div>
+                        <div>
+                            <div>{{ form.adress.label(class_="style-sign-label") }}</div>
+                            <div>{{ form.adress(minlength=5, maxlength=40, class="style-sign-plate") }}</div>
+                        </div>
+                    </div>
+                    <div class='content-sign'>
+                        <div>
+                            <div>{{ form.ema.label(class_="style-sign-label") }}</div>
+                            <div>{{ form.ema( minlength=1, maxlength=100, class="style-sign-plate") }}</div>
+                        </div>
+                        <div>
+                            <div>{{ form.verificarEma.label(class_="style-sign-label") }}</div>
+                            <div>{{ form.verificarEma(minlength=5, maxlength=40, class="style-sign-plate") }}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="content-line">
+                    <div >&nbsp;</div>
+                    <div >{{ form.btn(class='style-btn-sign') }}</div>
+                </div>
+            </div>
+        </form>
+    </section>
+</div>
+{% endblock %}
