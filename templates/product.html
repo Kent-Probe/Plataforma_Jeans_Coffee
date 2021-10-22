@@ -7,10 +7,10 @@
         <h2 class="label-titulos">Plato</h2>
     </div>
     <div class="content-plato">
+        {% for i in res %}
         <div class="item">
-            <img class='img-plato' src="{{url_for('static',filename='img/plato2.jpg')}}">
+            <img class='img-plato' src="{{url_for('static',filename=i[1])}}">
         </div>
-        {% for i in res  %}
         <div class="item">
             <div class="cont-info-plato">
                 <div class="content">
@@ -28,9 +28,7 @@
                 </div>
                 <div class='content-footer-plate'>
                     <div class ='content-circle'>
-                        <div class="circle"><i class="fa fa-plus-circle fa-2x" aria-hidden="true"></i></div>
-                        <div><h1>1</h1></div>
-                        <div class="circle"><i class="fa fa-minus-circle fa-2x" aria-hidden="true"></i></div>
+                        <div><input type="number" value='1' min="1" max="10" class="cantidad" name='cantidad'></div>
                     </div>
                     <div class="content-add"><h1>Agregar al carrito</h1></div>
                 </div>
@@ -39,7 +37,6 @@
         {% endfor %}
     </div>
 </section>
-{% if 'user' in session %}
     <!-- section comentarios-->
 <section >
     <div >
@@ -61,5 +58,4 @@
 
     </div>
 </section>
-{% endif %}
 {% endblock %}

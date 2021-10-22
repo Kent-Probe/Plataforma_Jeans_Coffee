@@ -20,10 +20,12 @@
         </div>
         <div class="tabla">
           <h1 class="text-title">GESTI&Oacute;N DE USUARIOS</h1><br>
+          <form name='fbuscarD' id='fbuscarD' action='' method='POST'>
             <div class="buscar-plato">
-                <input type="text" class="buscar">
-                <input type="submit" class="btn_buscar" value="Buscar">
+              {{ form.seh(class="buscar") }}
+              <input type="submit" class="btn_buscar" value="Buscar">
             </div>
+          </form>
               <table>
                   <tr>
                     <th>ID</th>
