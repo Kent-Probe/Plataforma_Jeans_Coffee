@@ -20,10 +20,12 @@
         </div>
         <div class="tabla">
           <h1 class="text-title">GESTI&Oacute;N DE PLATOS</h1><br>
-            <div class="buscar-plato">
-                <input type="text" class="buscar">
+          <form name='fbuscarD' id='fbuscarD' action='' method='POST'>
+                <div class="buscar-plato">
+                {{ form.seh(class="buscar") }}
                 <input type="submit" class="btn_buscar" value="Buscar">
-            </div>
+              </div>
+          </form>
               <table>
                   <tr>
                     <th>Foto</th>
@@ -38,8 +40,8 @@
                     <td>{{ i[1] }}</td>
                     <td>{{ i[0] }}</td>
                     <td>{{ i[2] }}</td>
-                    <td>{{ i[7] }}</td>
                     <td>{{ i[4] }}</td>
+                    <td>${{ i[6] }}</td>
                     <td><a>Comentario</a></td>
                   </tr>
                   {% endfor%}
