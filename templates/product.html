@@ -27,35 +27,77 @@
                     <p class='desc-text'>{{ i[5] }}</p>
                 </div>
                 <div class='content-footer-plate'>
+                    
                     <div class ='content-circle'>
                         <div><input type="number" value='1' min="1" max="10" class="cantidad" name='cantidad'></div>
                     </div>
-                    <div class="content-add"><h1>Agregar al carrito</h1></div>
+                    <div class="content-add"><h1><a href="/producto/?plate={{ i[2] }}">Agregar al carrito</a></h1></div>
                 </div>
             </div>
         </div>
         {% endfor %}
     </div>
 </section>
-    <!-- section comentarios-->
+    <!-- section agregar comentarios-->
 <section >
-    <div >
-        <h2 class="label-titulos">{{ nComentarios }}  {{ form.coment.label()}}</h2>
-    </div>
-    <div class="content">
-        <div class='item2' class='item-img'>
-            <div>
-                <img class="img-user" src="{{url_for('static', filename='img/imagen_usuario.png')}}">
-            </div>
-            <div class='nUser'>usuario</div>
+    <form name='fcoment' id='fcoment' action='' method='POST'>
+        <div >
+            <h2 class="label-titulos">{{ nComentarios }}  {{ form.coment.label()}}</h2>
         </div>
-        <div class='item2'>
-            {{ form.coment(class='style-coment')}}
-        </div>
-    </div>
-    <div class="content-cement">
-        <div class="btn-publicar"><h1>Publicar</h1></div>
+        <div class="content">
+            <div class='item2' class='item-img'>
+                <div>
+                    <img class="img-user" src="{{url_for('static', filename='img/imagen_usuario.png')}}">
+                </div>
 
-    </div>
+                {% if 'user' in session %}
+                <div class='nUser'>{{session['user']}}</div>
+                {% else %}
+                <div class='nUser'>usuario</div>
+                {% endif%}
+            </div>
+            <div class='item2'>
+                {{ form.coment(class='style-coment')}}
+            </div>
+        </div>
+        <div class="content-cement">
+            <h1><input type="submit" value='Publicar' class="btn-publicar" name='Publicar'><a></a></h1>
+        </div>
+    </form>
 </section>
+<!-- section todos los comentarios-->
+{% if res2%}
+<section>
+    {% for i in res2 %}
+        {% if i[2]|string in session|string %}
+            <div class="content">
+                <div class='item2' class='item-img'>
+                    <div class ="nUser">{{ i[4] }}</div>
+                    <div>
+                        <img class="img-user" src="{{url_for('static', filename='img/imagen_usuario.png')}}">
+                    </div>
+                    <div class='nUser'>{{ i[2] }}</div>
+                </div>
+                <div class='item2'>
+                    <textarea name="comentario" id="comentario" autofocus disabled autocomplete="" class="style-coment-fill" > {{ i[3] }} </textarea>
+                </div>
+            </div>
+        {% else %}
+        <div class="content">
+            <div class='item2'>
+                <textarea name="comentario" id="comentario" autofocus disabled autocomplete="" class="style-coment-fill" > {{ i[3] }} </textarea>
+            </div>
+            <div class='item2' class='item-img'>
+                <div class ="nUser">{{ i[4] }}</div>
+                <div>
+                    <img class="img-user" src="{{url_for('static', filename='img/imagen_usuario.png')}}">
+                </div>
+                <div class='nUser'>{{ i[2] }}</div>
+            </div>
+        </div>
+        {% endif %}
+    {% endfor %}
+    
+</section>
+{% endif %}
 {% endblock %}

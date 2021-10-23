@@ -1,9 +1,12 @@
 import os
-from werkzeug.utils import secure_filename
+from datetime import date
+from re import S
 
 from flask import Flask, flash, render_template, request, session, redirect, url_for
 from markupsafe import escape
+
 from werkzeug.security import check_password_hash, generate_password_hash
+from werkzeug.utils import secure_filename
 
 from conexion import accion, seleccion
 from forms import Login, comentar, password, plate, profile, search, sign_in
@@ -102,11 +105,11 @@ def sign():
         nom = form.nom.data.strip()
         apl = form.apl.data.strip()
         ema = form.ema.data.strip()
-        usr = form.usr.data.strip()
+        usr = form.usr.data
         ads = form.ads.data.strip()
         num = form.num.data
-        cla = form.cla.data.strip()
-        ver = form.ver.data.strip()
+        cla = form.cla.data
+        ver = form.ver.data
 
         # Validar los datos
         sw = True
@@ -174,10 +177,10 @@ def all_product():
 # Pagina de carro de compras seleccion
 @app.route("/shopping_car/")
 def shopping_car():
-     sql=f'SELECT id_usuario,nombre,cantidad,precio,cantidad*precio as total FROM plato P INNER JOIN compra C ON p.cod_plato=2'
-     dato=seleccion(sql)
-     print(dato)
-     return render_template('shopping_car.html',dato=dato)
+    sql=f'SELECT id_usuario,nombre,cantidad,precio,cantidad*precio as total FROM plato P INNER JOIN compra C ON p.cod_plato=2'
+    dato=seleccion(sql)
+    print(dato)
+    return render_template('shopping_car.html',dato=dato)
       
    
 # tabla carrito
@@ -206,19 +209,37 @@ def delete_all():
 def product():
     param = request.args.get('plate','zumo')
     form = comentar()
-    if request.method == 'GET':
-        if param:
-            sql = f'SELECT * FROM plato WHERE nombre="{param}"'
-        else:
-            sql = f'SELECT * FROM plato WHERE cod_plato=1'
-        print(sql)
-        res = seleccion(sql)
-        print(res)
-        return render_template('product.html', form=form, titulo='producto', res=res)
+    form.coment.data = ""
+    if param:
+        sql = f'SELECT * FROM plato WHERE nombre="{param}"'
     else:
-        coment = form.coment
-        return render_template('product.html', form=form, titulo='producto')
+        sql = f'SELECT * FROM plato WHERE cod_plato=1'
+    res1 = seleccion(sql)
+    ideP = res1[0][0]
 
+    sql2 = f"SELECT * FROM comentario WHERE cod_plato={ideP}"
+    res2 = seleccion(sql2)
+
+
+    if 'user' in session:
+        if request.method == 'POST':
+            sql = f"SELECT id_usuario FROM usuario WHERE user='{ session['user'] }'"
+            res = seleccion(sql)
+            ideU = res[0][0]
+            today = date.today()
+            coment = form.coment.data
+
+            sql = "INSERT INTO comentario(id_usuario, cod_plato, user, comentario, fecha) VALUES(?, ?, ?, ?, ?)"
+            res = accion(sql,(ideU, ideP, session['user'], coment, format(today)))
+            #print(res2[1][2] in session['user'])
+            if res!=0:
+                print('INFO: Datos almacenados con exito')
+            else:
+                print('ERROR: Por favor reintente')
+    else:
+        print("Lo siento el usuario no esta en sesion ahora mismo")
+    return render_template('product.html', form=form, titulo='producto', res=res1, res2=res2)
+        
 #Pagina de dashboard platos
 @app.route('/dashboard/', methods=['GET', 'POST'])
 @app.route('/dashboard/platos/', methods=['GET', 'POST'])
@@ -292,7 +313,6 @@ def editPlato():
     form = plate()
     if request.method=='GET':
         sql = "SELECT * FROM plato WHERE nombre= 'zumo'"
-
         res = seleccion(sql)
         for i in res:
             form.nPlato.data = i[2]

@@ -422,6 +422,21 @@ padding: 2rem;
   height: 10rem;
   border-radius: 50px;
 }
+.style-coment-fill{
+  width: 90rem;
+  height: 11rem;
+
+  background: #FFFFFF;
+  border: 1px solid #8692A6;
+  box-sizing: border-box;
+
+  overflow: hidden;
+  padding: 20px;
+  border-radius: 16px 0px 16px 0px;
+
+  resize: none;
+  scroll-behavior: auto;
+}
 .style-coment{
   width: 90rem;
   height: 11rem;
@@ -429,7 +444,38 @@ padding: 2rem;
   background: #FFFFFF;
   border: 1px solid #8692A6;
   box-sizing: border-box;
-  border-radius: 6px;
+
+  overflow: hidden;
+  padding: 20px;
+  border-radius: 0px 16px 0px 16px;
+
+  resize: none;
+  scroll-behavior: auto;
+}
+.style-coment::-webkit-scrollbar {
+  -webkit-appearance: none;
+}
+
+.style-coment::-webkit-scrollbar:vertical {
+  width:10px;
+}
+
+.style-coment::-webkit-scrollbar-button:increment,.style-coment::-webkit-scrollbar-button {
+  display: none;
+} 
+
+.style-coment::-webkit-scrollbar:horizontal {
+  height: 10px;
+}
+
+.style-coment::-webkit-scrollbar-thumb {
+  background-color: #797979;
+  border-radius: 20px;
+  border: 2px solid #f1f2f3;
+}
+
+.style-coment::-webkit-scrollbar-track {
+  border-radius: 10px;  
 }
 .nUser{
   text-align: center;
