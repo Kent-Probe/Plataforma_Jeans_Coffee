@@ -19,12 +19,12 @@ app.secret_key = os.urandom(24)
 #Pagina 400
 @app.errorhandler(404)
 def page_not_found(e):
-    return render_template('error404.html')
+    return render_template('error404.html'), 404
 
 #Pagina 500
 @app.errorhandler(500)
 def server_error(e):
-    return render_template('error500.html')
+    return render_template('error500.html'), 500
 
 #Terminos y condiciones
 @app.route("/terms_conditions/")
@@ -102,14 +102,14 @@ def sign():
         return render_template('sign_in.html', form=form, titulo='Registro')
     else:
         # Recuperar los datos del formulario
-        nom = form.nom.data.strip()
-        apl = form.apl.data.strip()
-        ema = form.ema.data.strip()
-        usr = form.usr.data
-        ads = form.ads.data.strip()
-        num = form.num.data
-        cla = form.cla.data
-        ver = form.ver.data
+        nom = escape(form.nom.data.strip())
+        apl = escape(form.apl.data.strip())
+        ema = escape(form.ema.data.strip())
+        usr = escape(form.usr.data)
+        ads = escape(form.ads.data.strip())
+        num = escape(form.num.data)
+        cla = escape(form.cla.data)
+        ver = escape(form.ver.data)
 
         # Validar los datos
         sw = True
@@ -148,7 +148,7 @@ def sign():
                 print('INFO: Datos almacenados con exito')
             else:
                 print('ERROR: Por favor reintente')
-        return render_template('sign_in.html', form=form, titulo='Registro')
+        return redirect(url_for('login'))
             
 #Pagina de favoritos
 @app.route("/favoritos/")
@@ -379,31 +379,45 @@ def editProfile():
             return render_template("edit_profile.html", form = form)
         else:
             #Recuperar datos del formulario
-            name = form.nPorfile.data 
-            lName = form.aPellido.data 
-            num = form.num.data 
-            adress = form.adress.data
-            ema = form.ema.data 
-            vema= form.verificarEma.data
+            name = escape(form.nPorfile.data) 
+            lName = escape(form.aPellido.data) 
+            num = escape(form.num.data) 
+            adress = escape(form.adress.data)
+            ema = escape(form.ema.data) 
+            vema= escape(form.verificarEma.data)
             #Validad datos
             sw = True
-            if len(name)<5 or len(name)>40:
-                print("El nombre es requerido, longitud no valida [5-40]")
-                sw = False
-            if len(lName)<5 or len(lName)>40:
-                print("longitud no valida [5-40] para el apellido")
-                sw = False
-            if len(adress)<5 or len(adress)>40:
-                print("la direccion es requerido, longitud no valida [5-40]")
-                sw = False
-            if len(ema)<5 or len(ema)>40:
-                print("El email es requerido, longitud no valida [5-40]")
-                sw = False
-            if ema != vema:
-                print("No concuerdan los email")
-                sw = False
-            if sw:
+            if name:
+                if len(name)>40:
+                    print("longitud no valida [5-40]")
+                    sw = False    
+                sql=f"UPDATE usuario SET nombre=? WHERE user='{session['user']}'"
+            if lName:
+                if len(lName)>40:
+                    print("longitud no valida [5-40] para el apellido")
+                    sw = False
+                sql=f"UPDATE usuario SET apellido=? WHERE user='{session['user']}'"
+            if adress:
+                if len(adress)>40:
+                    print("longitud no valida [5-40]")
+                    sw = False
+                sql=f"UPDATE usuario SET direccion=? WHERE user='{session['user']}'"
+            if num:
+                if len(num)>10:
+                    print("NO agrege prefigo (+57), y asegúrese de que sea un numero valido en Colombia")
+                    sw = False
+                sql=f"UPDATE usuario SET telefono=? WHERE user='{session['user']}'"
+            if ema:
+                if len(ema)>40:
+                    print("longitud no valida [5-40]")
+                    sw = False
+                if ema != vema:
+                    print("No concuerdan los email")
+                    sw = False
+                sql=f"UPDATE usuario SET email=? WHERE user='{session['user']}'"
+            if name and lName and adress and ema and num:
                 sql=f"UPDATE usuario SET nombre=?, apellido=?, telefono=?, direccion=?, email=? WHERE user='{session['user']}'"
+            if sw:
                 # Ejecutar la consulta
                 print(sql,( name, lName, num, adress, ema))
                 print(accion(sql,( name, lName, num, adress, ema)))

@@ -218,7 +218,11 @@ header .navbar #principal:hover {
 }
 
 /* login */
-
+.login-style{
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}
 .img-header-login{
  padding: 0;
 }
@@ -264,7 +268,7 @@ header .navbar #principal:hover {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: flex-start;
+
   padding: 18px 26px;
   width: 120%;
   height: 60px;
@@ -274,7 +278,9 @@ header .navbar #principal:hover {
   box-sizing: border-box;
   border-radius: 30px;
 }
- 
+.style-login-btn{
+  align-items: center;
+}
 .form-login input[type="submit"]{
   background-color: var(--marron);
   color: #ffffff;
@@ -499,18 +505,16 @@ padding: 2rem;
 .text-title, .text-title-profile{
   margin-top: 5rem;
   font-size: 20px;
-  display: flex;
-  justify-content: left;
   color: #06496E;
-}
-.text-title-profile{
   display: flex;
   justify-content: center;
 }
+
 .line{
+  background-color: #C68B59;
   width: 50rem;
-  border: 1px solid #C68B59;
-}
+  border: 1px solid#C68B59;
+} 
 .content-line{
   display: flex;
   justify-content: center;
@@ -537,7 +541,7 @@ padding: 2rem;
   display: flex;
   justify-content: space-between;
   flex-direction: row;
-  margin-left: 7rem;
+
 }
 .content-sign-great{
   width: 50%;
@@ -719,9 +723,6 @@ tr:nth-child(odd) {
   font-size: 20px;
   font-weight: bolder;
 }
-.tabla{
-
-}
 
 .table-shopping td, .table-shopping th{
   border: 0px solid #ffffff;
@@ -800,7 +801,20 @@ tr:nth-child(odd) {
   padding: 2rem 30rem;
   width: 100%;
 }
-/*Espacion*/
+/*Terminos y condiciones*/
+.terminos{
+  padding: 50px;
+}
+.terminos h1{
+  padding: 35px;
+}
+.terminos h2{
+  padding: 6px;
+}
+
+
+
+
 
 
 
@@ -850,10 +864,7 @@ tr:nth-child(odd) {
   }
 
   .form-login input{
-    width: 250%;
-    height: 30px;
-    border: 1px solid #ffffff;
-    border-radius: 1rem;
+
   }
   .form-login a{
     color: #865439;
