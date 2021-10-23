@@ -209,7 +209,6 @@ def delete_all():
 def product():
     param = request.args.get('plate','zumo')
     form = comentar()
-    form.coment.data = ""
     if param:
         sql = f'SELECT * FROM plato WHERE nombre="{param}"'
     else:
@@ -219,7 +218,6 @@ def product():
 
     sql2 = f"SELECT * FROM comentario WHERE cod_plato={ideP}"
     res2 = seleccion(sql2)
-
 
     if 'user' in session:
         if request.method == 'POST':
@@ -236,6 +234,7 @@ def product():
                 print('INFO: Datos almacenados con exito')
             else:
                 print('ERROR: Por favor reintente')
+            return redirect(url_for('product'))
     else:
         print("Lo siento el usuario no esta en sesion ahora mismo")
     return render_template('product.html', form=form, titulo='producto', res=res1, res2=res2)
