@@ -131,20 +131,23 @@ header .navbar #principal:hover {
 }
 
 .content-box {
+
   display: flex;
   flex-wrap: wrap;
   gap: 1.5rem;
 }
 
 .content-box .box {
+  width: 1px;
   flex: 1 1 28rem;
   position: relative;
   overflow: hidden;
   border: 0.2rem solid var(--marronclaro);
-  max-width: 100%;
+  max-width: 30%;
   height: 400px;
   margin-bottom: 20px;
   cursor: pointer;
+  
 }
 
 .content-box .box:hover .img {
@@ -723,6 +726,22 @@ tr:nth-child(odd) {
   font-size: 20px;
   font-weight: bolder;
 }
+.tabla{
+  padding: 2rem 9%;
+  width: 100%;
+  margin-left: 100px;
+}
+.btn_car{
+  padding: 1rem;
+  border: 2px solid var(--marronclaro);
+  border-radius: 20px;
+  background-color: var(--marron);
+  color: #ffffff;
+  position: absolute;
+  top: 40%;
+  margin-left: 100px;
+  cursor: pointer;
+}
 
 .table-shopping td, .table-shopping th{
   border: 0px solid #ffffff;
@@ -773,9 +792,19 @@ tr:nth-child(odd) {
   color: var(--azul);
 }
 
+.box-all{
+  background-color: #1565D8;
+  display: flex;
+  flex-wrap: wrap;
+  border: 4px solid #FFFAFA;
+
+}
+
 .ifavorito{
   width: 25%;
+  height: 100px;
 }
+
 .tfavorito{
   margin-bottom: 4rem;
   color:var(--azul) ;
@@ -811,9 +840,28 @@ tr:nth-child(odd) {
 .terminos h2{
   padding: 6px;
 }
+/* Check box de favoritos */
+label {
+  color: grey;
+  font-size: 40px;
+}
 
+.clasificacion {
+  direction: rtl;
+  unicode-bidi: bidi-override;
+}
 
+label:hover,
+label:hover ~ label {
+  color: orange;
+}
 
+input[type="checkbox"]:checked ~ label {
+  color: orange;
+}
+input[type="checkbox"] {
+  display: none;
+}
 
 
 

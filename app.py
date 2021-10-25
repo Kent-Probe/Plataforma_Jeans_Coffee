@@ -1,12 +1,14 @@
 import os
 from datetime import date
-from re import S
+from re import S 
 
 from flask import Flask, flash, render_template, request, session, redirect, url_for
+from flask.sessions import SecureCookieSession
 from markupsafe import escape
 
 from werkzeug.security import check_password_hash, generate_password_hash
 from werkzeug.utils import secure_filename
+from werkzeug.wrappers.request import PlainRequest
 
 from conexion import accion, seleccion
 from forms import Login, comentar, password, plate, profile, search, sign_in
@@ -154,8 +156,16 @@ def sign():
 @app.route("/favoritos/")
 @app.route("/favorites/")
 def favorites():
-    return render_template('favoritos.html', titulo='favoritos')
+    if 'user' in session:
+        sql = f"SELECT id_usuario FROM usuario WHERE user='{session['user']}'"
+        res = seleccion(sql)
 
+        sql = f"SELECT p.imagen, p.nombre, p.calificacion, p.valor, p.descripcion FROM favoritos f, plato p WHERE f.id_usuario='{res[0][0]}' and p.cod_plato=f.cod_plato"
+        res = seleccion(sql)
+        
+        print(res)
+        return render_template('favoritos.html', titulo='favoritos' ,res=res)
+    return redirect(url_for('index'))
 #Pagina de buscar - Todos los productos
 @app.route("/search/")
 @app.route("/buscar/")
@@ -175,12 +185,22 @@ def all_product():
         return render_template('all_product.html', form=form, titulo='producto', res=res, search=seh)
 
 # Pagina de carro de compras seleccion
-@app.route("/shopping_car/")
+@app.route("/shopping_car/",methods=['GET', 'POST'])
 def shopping_car():
-    sql=f'SELECT id_usuario,nombre,cantidad,precio,cantidad*precio as total FROM plato P INNER JOIN compra C ON p.cod_plato=2'
-    dato=seleccion(sql)
-    print(dato)
-    return render_template('shopping_car.html',dato=dato)
+    param = request.args.get('cod_plato')
+    sql = f"SELECT id_compra, nombre, cantidad, precio, total FROM compra WHERE id_usuario=(SELECT id_usuario FROM usuario WHERE user='{session['user']}')"
+    resS = seleccion(sql)
+    if('user' in session):
+
+        if request.method == 'POST':
+            if param:
+                cantidad = request.form.get('ncantidad')
+                sql = f"INSERT INTO compra(id_usuario, cod_plato, nombre, cantidad, precio, total) SELECT id_usuario, p.cod_plato, p.nombre, {cantidad}, p.valor, {cantidad}*p.valor FROM usuario, plato p WHERE p.cod_plato={param} and user='{session['user']}'"
+                res = seleccion(sql)
+        return render_template('shopping_car.html', res = resS)
+    else:
+        return render_template('shopping_car.html')
+        
       
    
 # tabla carrito
@@ -208,7 +228,7 @@ def delete_all():
 @app.route("/producto/", methods=['GET', 'POST'])
 def product():
     param = request.args.get('plate','zumo')
-    form = comentar()
+    formC = comentar()
     if param:
         sql = f'SELECT * FROM plato WHERE nombre="{param}"'
     else:
@@ -219,25 +239,31 @@ def product():
     sql2 = f"SELECT * FROM comentario WHERE cod_plato={ideP}"
     res2 = seleccion(sql2)
 
+    sql = f"SELECT id_usuario FROM usuario WHERE user='{ session['user'] }'"
+    res = seleccion(sql)
+    ideU = res[0][0]
+    
     if 'user' in session:
         if request.method == 'POST':
-            sql = f"SELECT id_usuario FROM usuario WHERE user='{ session['user'] }'"
-            res = seleccion(sql)
-            ideU = res[0][0]
+            if int(request.form.get('favoritos')) == 1:
+                sqlf = f'INSERT INTO favoritos(id_usuario, cod_plato) VALUES(?, ?)'
+                res = accion(sqlf,(ideU, ideP))
+                print(res)
             today = date.today()
-            coment = form.coment.data
-
-            sql = "INSERT INTO comentario(id_usuario, cod_plato, user, comentario, fecha) VALUES(?, ?, ?, ?, ?)"
-            res = accion(sql,(ideU, ideP, session['user'], coment, format(today)))
+            coment = formC.coment.data
+            if coment != "":
+                sql = "INSERT INTO comentario(id_usuario, cod_plato, user, comentario, fecha) VALUES(?, ?, ?, ?, ?)"
+                res = accion(sql,(ideU, ideP, session['user'], coment, format(today)))
+            
             #print(res2[1][2] in session['user'])
             if res!=0:
                 print('INFO: Datos almacenados con exito')
             else:
                 print('ERROR: Por favor reintente')
-            return redirect(url_for('product'))
+            return render_template('product.html', form=formC, titulo='producto', res=res1, res2=res2)
     else:
         print("Lo siento el usuario no esta en sesion ahora mismo")
-    return render_template('product.html', form=form, titulo='producto', res=res1, res2=res2)
+    return render_template('product.html', form=formC, titulo='producto', res=res1, res2=res2)
         
 #Pagina de dashboard platos
 @app.route('/dashboard/', methods=['GET', 'POST'])

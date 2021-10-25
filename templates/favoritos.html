@@ -1,66 +1,26 @@
 {% extends 'base.html'%}
 {% block cuerpo%}
     <!-- section header imagen  -->
-
+    
     <section class="favoritos">
       <h1 class="tfavorito"><i class="fas fa-star"></i>&nbsp &nbsp Lista de favoritos</h1>
-
-    <div class="contenido-favorito">
-
-      <img src="{{url_for('static',filename='img/coctel2.jpg')}}" class="ifavorito" alt="" />
-      <div class="box-favoritos">
-          <div class="estrellas">
-              <h3 class="titulo-lista">Black Russian</h3>
-              <a class="estrella">&#9733</a>
-              <a class="estrella">&#9733</a>
-              <a class="estrella">&#9733</a>
-              <a class="estrella">&#9733</a>
-              <a class="estrella">&#9733 </a>
+      <div class="content-box">
+        {% for i in res  %}
+        <div class="box">
+          <a href="/producto/?plate={{ i[1] }}"><img src="{{url_for('static',filename=i[0])}}" class="img" alt="plato2" /></a>
+          <div class="contenido">
+            <h1> {{i[1]}} </h1>
+            <p class="description"> {{ i[4]}} </p> 
+            </p>
+            <p class="precio">${{ i[3] }}</p>
+            <div class="estrellas">
+              {% for y in range(i[2]|int) %}
+              <a class="estrella">&#9733 {% endfor %}<span class="puntaje">  {{ i[2] }}</span></a>
             </div>
-            <div class="description">
-              <p class="des-favorito">Descripcion</p>
-              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sed, nulla.</p>
-              <p class="precio">$49000</p>
-            </div>
+          </div>
+        </div>
+        {% endfor %}
+
       </div>
-    </div>
-    <div class="contenido-favorito">
-
-      <img src="{{url_for('static',filename='img/coctel3.jpg')}}" class="ifavorito" alt="" />
-      <div class="box-favoritos">
-          <div class="estrellas">
-              <h3 class="titulo-lista">Daiquiri</h3>
-              <a class="estrella">&#9733</a>
-              <a class="estrella">&#9733</a>
-              <a class="estrella">&#9733</a>
-              <a class="estrella">&#9733</a>
-              <a class="estrella">&#9733 </a>
-            </div>
-            <div class="description">
-              <p class="des-favorito">Descripcion</p>
-              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sed, nulla.</p>
-              <p class="precio">$13000</p>
-            </div>
-      </div>
-    </div>
-    <div class="contenido-favorito">
-
-      <img src="{{url_for('static',filename='img/coctel4.jpg')}}" class="ifavorito" alt="" />
-      <div class="box-favoritos">
-          <div class="estrellas">
-              <h3 class="titulo-lista">Dry Martini</h3>
-              <a class="estrella">&#9733</a>
-              <a class="estrella">&#9733</a>
-              <a class="estrella">&#9733</a>
-              <a class="estrella">&#9733</a>
-              <a class="estrella">&#9733 </a>
-            </div>
-            <div class="description">
-              <p class="des-favorito">Descripcion</p>
-              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sed, nulla.</p>
-              <p class="precio">$55000</p>
-            </div>
-      </div>
-    </div>
   </section>
 {% endblock %}
