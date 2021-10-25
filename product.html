@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% block cuerpo %}
+    <!-- section plato individual -->
+<section >
+    <div>
+        <div class='buscar'></div>
+
+        <h2 class="label-titulos">Plato</h2>
+
+    </div>
+    <div class="content-plato">
+        <div class="item">
+            <img class='img-plato' src="{{url_for('static',filename='img/plato2.jpg')}}">
+        </div>
+        <div class="item">
+            <div class="cont-info-plato">
+
+                <div class="content">
+                    <h1 class="name-plate">{{data[2]}}</h1>
+                    <h1 class='name-price'>{{data[5]}}</h1>
+                </div><br>
+                <div class='estrella'>
+                    <i class="fa fa-star" aria-hidden="true"></i>
+                </div><br>
+                <div class="content-desc">
+                    <h3 class="desc-title">Descripci&oacute;n</h3>
+                    <p class='desc-text'>{{data[4]}}</p>
+                </div>
+                <div class='content-footer-plate'>
+                    <div class ='content-circle'>
+                        <form name="cantidad" method="POST" action="{{url_for('shopping_car')}}">
+                            <input type="number" value='1' min="1" max="10" class="cantidad" name='cantidad'>
+                           
+                            <input type="submit" value="Agregar a carrito" class="btn_car">
+
+                        </form>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+    <!-- section comentarios-->
+<section >
+    <div >
+        <h2 class="label-titulos">{{ nComentarios }}  {{ form.coment.label()}}</h2>
+    </div>
+    <div class="content">
+        <div class='item2' class='item-img'>
+            <div>
+                <img class="img-user" src="{{url_for('static', filename='img/imagen_usuario.png')}}">
+            </div>
+            <div class='nUser'>usuario</div>
+        </div>
+        <div class='item2'>
+            {{ form.coment(class='style-coment')}}
+        </div>
+    </div>
+    <div class="content-cement">
+        <div class="btn-publicar"><h1>Publicar</h1></div>
+
+    </div>
+</section>
+{% endblock %}
