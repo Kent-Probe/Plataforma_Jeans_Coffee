@@ -487,18 +487,15 @@ def contraseña():
             res = seleccion(sql)
             #Procesar la consulta
             comp = res[0][0]
-            print(check_password_hash('12345',comp))
-            print("aqui hay un post")
-            if check_password_hash(claV,comp):
+            if check_password_hash(comp, claV):
                 cla = form.cla.data
                 ver = form.ver.data
-                print(cla)
-                print(ver)
                 if cla == ver:
-                    sql = f"UPDATE usuario SET contraseña=? WHERE user='{session['user']}'"
                     # Ejecutar la consulta
                     pwd = generate_password_hash(cla)
-                    res = accion(sql,(pwd))
+                    sql = f"UPDATE usuario SET contraseña='{pwd}' WHERE user='{session['user']}'"
+                    res = seleccion(sql)
+                    print(sql)
                     print(res)
                     # Procesar la respuesta
                     if res!=0:

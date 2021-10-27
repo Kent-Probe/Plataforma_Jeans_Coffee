@@ -375,6 +375,7 @@ header .navbar #principal:hover {
   font-style: normal;
   font-weight: bold;
   font-size: 24px;
+  margin-left: 20px;
 }
 .name-price{
   font-family: Poppins;
