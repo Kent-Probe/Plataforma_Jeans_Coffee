@@ -308,128 +308,141 @@ def product():
 @app.route('/dashboard/', methods=['GET', 'POST'])
 @app.route('/dashboard/platos/', methods=['GET', 'POST'])
 def dashboard():
-    form = search()
-    if request.method == 'GET':
-        sql = f'SELECT *FROM plato'
-        res = seleccion(sql)
-    else:
-        seh = form.seh.data
-        param = request.args.get('seh', seh)
-        if param:
-            sql = f"SELECT * FROM plato WHERE nombre LIKE '{param}%'"
-            res = seleccion(sql)
-        else:
+    if 'user' in session:
+        form = search()
+        if request.method == 'GET':
             sql = f'SELECT *FROM plato'
             res = seleccion(sql)
-    return render_template('platos.html', form=form, titulo='dashboard', res=res)
+        else:
+            seh = form.seh.data
+            param = request.args.get('seh', seh)
+            if param:
+                sql = f"SELECT * FROM plato WHERE nombre LIKE '{param}%'"
+                res = seleccion(sql)
+            else:
+                sql = f'SELECT *FROM plato'
+                res = seleccion(sql)
+        return render_template('platos.html', form=form, titulo='dashboard', res=res)
+    else:
+        return redirect(url_for('index'))
 
 #Pagina de dashboard gestion usuario
 @app.route('/dashboard/usuarios/', methods=['GET', 'POST'])
 def usuarios():
-    form = search()
-    print(request.args.get('cliente'))
-    if request.method == 'GET':
-        sql = f'SELECT * FROM usuario WHERE id_usuario > 1 '
-        res = seleccion(sql)
-    else:
-        seh = form.seh.data
-        param = request.args.get('seh', seh)
-        if param:
-            sql = f"SELECT * FROM usuario WHERE nombre LIKE '{param}%' and id_usuario > 1"
+    if 'user' in session:
+        form = search()
+        print(request.args.get('cliente'))
+        if request.method == 'GET':
+            sql = f'SELECT * FROM usuario WHERE id_usuario > 1 '
             res = seleccion(sql)
         else:
-            sql = f'SELECT * FROM usuario WHERE id_usuario > 1'
-            res = seleccion(sql)
-    return render_template('usuarios.html', form=form, titulo='dashboard', res=res)
+            seh = form.seh.data
+            param = request.args.get('seh', seh)
+            if param:
+                sql = f"SELECT * FROM usuario WHERE nombre LIKE '{param}%' and id_usuario > 1"
+                res = seleccion(sql)
+            else:
+                sql = f'SELECT * FROM usuario WHERE id_usuario > 1'
+                res = seleccion(sql)
+        return render_template('usuarios.html', form=form, titulo='dashboard', res=res)
+    else:
+        return redirect(url_for('index'))
 
 @app.route('/asignarRol/')
 def asignarRol():
-    admin = request.args.get('admin')
-    cliente = request.args.get('cliente')
-    print(request.args.get('admin'))
-    print(request.args.get('cliente'))
-    if admin:
-        sqlU = f"UPDATE usuario SET rol='admin' WHERE id_usuario={admin}"
-        print(sqlU)
-        res = seleccion(sqlU)
-        return redirect(url_for('usuarios'))
-    if cliente:
-        sqlU = f"UPDATE usuario SET rol='cliente' WHERE id_usuario={cliente}"
-        print(sqlU)
-        res = seleccion(sqlU)
-        return redirect(url_for('usuarios'))
-
+    if 'user' in session:
+        admin = request.args.get('admin')
+        cliente = request.args.get('cliente')
+        print(request.args.get('admin'))
+        print(request.args.get('cliente'))
+        if admin:
+            sqlU = f"UPDATE usuario SET rol='admin' WHERE id_usuario={admin}"
+            print(sqlU)
+            res = seleccion(sqlU)
+            return redirect(url_for('usuarios'))
+        if cliente:
+            sqlU = f"UPDATE usuario SET rol='cliente' WHERE id_usuario={cliente}"
+            print(sqlU)
+            res = seleccion(sqlU)
+            return redirect(url_for('usuarios'))
+    else:
+        return redirect(url_for('index'))
 #Pagina dashboard agregar platos
 @app.route('/dashboard/platos/add_plate/', methods=['GET', 'POST'])
 @app.route('/dashboard/platos/agregar_plato/', methods=['GET', 'POST'])
 def addPlatos():
-    form = plate()
-    if request.method=='GET':
-        return render_template('add_plate.html', form=form, titulo='Agregar plato')
-    else:
-        nom = form.nPlato.data.strip()
-        val = form.pPlato.data.strip()
-        des = form.dPlato.data.strip()
-
-        #Guardar imagen
-        f = request.files['aImgPlato']
-        nom = secure_filename(f.filename)
-        img = f'uploads/{nom}'
-        f.save(f'static/{img}')
-
-        # Preparar la consulta
-        sql = "INSERT INTO plato(nombre, descripcion, valor, imagen) VALUES (?, ?, ?, ?)"
-        # Ejecutar la consulta
-        res = accion(sql,( nom, des, val, img))
-        #Procesar la respuesta
-        if res!=0:
-            print('INFO: Datos almacenados con exito')
+    if 'user' in session:
+        form = plate()
+        if request.method=='GET':
+            return render_template('add_plate.html', form=form, titulo='Agregar plato')
         else:
-            print('ERROR: Por favor reintente')
-        return render_template('add_plate.html', form=form, titulo='Agregar plato')
+            nom = form.nPlato.data.strip()
+            val = form.pPlato.data.strip()
+            des = form.dPlato.data.strip()
+
+            #Guardar imagen
+            f = request.files['aImgPlato']
+            nom = secure_filename(f.filename)
+            img = f'uploads/{nom}'
+            f.save(f'static/{img}')
+
+            # Preparar la consulta
+            sql = "INSERT INTO plato(nombre, descripcion, valor, imagen) VALUES (?, ?, ?, ?)"
+            # Ejecutar la consulta
+            res = accion(sql,( nom, des, val, img))
+            #Procesar la respuesta
+            if res!=0:
+                print('INFO: Datos almacenados con exito')
+            else:
+                print('ERROR: Por favor reintente')
+            return render_template('add_plate.html', form=form, titulo='Agregar plato')
+    else:
+        return redirect(url_for('index'))
 
 #Pagina dashboard editar plato
 @app.route('/dashboard/platos/edit_plate/', methods=['GET', 'POST'])
 @app.route('/dashboard/platos/editar_plato/', methods=['GET', 'POST'])
 def editPlato():
-    form = plate()
-    if request.method=='GET':
-        param = request.args.get('id_plato')
-        if param:
-            sql = f"SELECT * FROM plato WHERE cod_plato='{param}'"
+    if 'user' in session:
+        form = plate()
+        if request.method=='GET':
+            param = request.args.get('id_plato')
+            if param:
+                sql = f"SELECT * FROM plato WHERE cod_plato='{param}'"
+            else:
+                sql = "SELECT * FROM plato WHERE cod_plato=1"
+
+            res = seleccion(sql)
+
+            for i in res:
+                form.nPlato.data = i[2]
+                form.pPlato.data = i[-1]
+                form.dPlato.data = i[4]
+            return render_template('edit_plate.html', form=form, titulo='Editar plato')
         else:
-            sql = "SELECT * FROM plato WHERE cod_plato=1"
+            nom = form.nPlato.data.strip()
+            val = form.pPlato.data.strip()
+            des = form.dPlato.data.strip()
 
-        res = seleccion(sql)
+            f = request.files['aImgPlato']
+            nom = secure_filename(f.filename)
+            img = f'uploads/{nom}'
+            f.save(f'static/{img}')
 
-        for i in res:
-            form.nPlato.data = i[2]
-            form.pPlato.data = i[-1]
-            form.dPlato.data = i[4]
-        return render_template('edit_plate.html', form=form, titulo='Editar plato')
+            # Preparar la consulta
+            sql="UPDATE plato SET nombre=?, descripcion=?, valor=?, img=? WHERE nombre='zumo'"
+            # Ejecutar la consulta
+            res = accion(sql,( nom, des, val, img))
+            print(res)
+            print(sql,( nom, des, val, img))
+            #Procesar la respuesta
+            if res!=0:
+                print('INFO: Datos almacenados con exito')
+            else:
+                print('ERROR: Por favor reintente')
+            return render_template('edit_plate.html', form=form, titulo='Editar plato')
     else:
-        nom = form.nPlato.data.strip()
-        val = form.pPlato.data.strip()
-        des = form.dPlato.data.strip()
-
-        f = request.files['aImgPlato']
-        nom = secure_filename(f.filename)
-        img = f'uploads/{nom}'
-        f.save(f'static/{img}')
-
-        # Preparar la consulta
-        sql="UPDATE plato SET nombre=?, descripcion=?, valor=?, img=? WHERE nombre='zumo'"
-        # Ejecutar la consulta
-        res = accion(sql,( nom, des, val, img))
-        print(res)
-        print(sql,( nom, des, val, img))
-        #Procesar la respuesta
-        if res!=0:
-            print('INFO: Datos almacenados con exito')
-        else:
-            print('ERROR: Por favor reintente')
-        return render_template('edit_plate.html', form=form, titulo='Editar plato')
-
+        return redirect(url_for('index'))
 #ver perfil
 @app.route('/perfil/')
 @app.route('/profile/')

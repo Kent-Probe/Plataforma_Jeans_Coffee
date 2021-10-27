@@ -546,25 +546,24 @@ padding: 2rem;
   font-size: 16px;
   line-height: 19px;
 }
-.content-sign{
-  display: flex;
-  justify-content: space-between;
-  flex-direction: row;
 
-}
 .content-sign-great{
   width: 50%;
   display: table;
   position: absolute;
   margin-left: 200px;
 }
+
 .style-btn-sign{
   color: white;
   width: 22rem;
   height: 5rem;
   background: #C68B59;
   border-radius: 6px;
+  margin-left: 150px;
+
 }
+
 .style-btn-sign:hover{
   background-color: #1565D8;
   color: white;
@@ -696,7 +695,14 @@ tr:nth-child(odd) {
 /* Agregar plato - editar plato*/
 .content-sign-add-platos{
   margin-top: 24px;
+  margin-left: 120px
 }
+.contiende_todo{
+  position: absolute;
+  left: 200px;
+}
+
+
 .style-sign-plate{
   width: 80%;
   height: 5rem;
