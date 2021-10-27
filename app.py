@@ -1,14 +1,17 @@
 import os
 from datetime import date
-from re import S 
+from re import T
 
 from flask import Flask, flash, render_template, request, session, redirect, url_for
+from flask.scaffold import F
 from flask.sessions import SecureCookieSession
+from flask.typing import ResponseReturnValue
 from markupsafe import escape
 
 from werkzeug.security import check_password_hash, generate_password_hash
 from werkzeug.utils import secure_filename
 from werkzeug.wrappers.request import PlainRequest
+from werkzeug.wrappers.response import ResponseStream
 
 from conexion import accion, seleccion
 from forms import Login, comentar, password, plate, profile, search, sign_in
@@ -188,15 +191,19 @@ def all_product():
 @app.route("/shopping_car/",methods=['GET', 'POST'])
 def shopping_car():
     param = request.args.get('cod_plato')
-    sql = f"SELECT id_compra, nombre, cantidad, precio, total FROM compra WHERE id_usuario=(SELECT id_usuario FROM usuario WHERE user='{session['user']}')"
-    resS = seleccion(sql)
     if('user' in session):
-
         if request.method == 'POST':
             if param:
-                cantidad = request.form.get('ncantidad')
-                sql = f"INSERT INTO compra(id_usuario, cod_plato, nombre, cantidad, precio, total) SELECT id_usuario, p.cod_plato, p.nombre, {cantidad}, p.valor, {cantidad}*p.valor FROM usuario, plato p WHERE p.cod_plato={param} and user='{session['user']}'"
+                sql = f"SELECT * FROM compra, usuario u WHERE cod_plato={param} and u.user='{session['user']}'"
                 res = seleccion(sql)
+                print(res)
+                print(not(res))
+                if not(res):
+                    cantidad = request.form.get('ncantidad')
+                    sql = f"INSERT INTO compra(id_usuario, cod_plato, nombre, cantidad, precio, total) SELECT id_usuario, p.cod_plato, p.nombre, {cantidad}, p.valor, {cantidad}*p.valor FROM usuario, plato p WHERE p.cod_plato={param} and user='{session['user']}'"
+                    res = seleccion(sql)
+        sql = f"SELECT id_compra, nombre, cantidad, precio, total FROM compra WHERE id_usuario=(SELECT id_usuario FROM usuario WHERE user='{session['user']}')"
+        resS = seleccion(sql)
         return render_template('shopping_car.html', res = resS)
     else:
         return render_template('shopping_car.html')
@@ -228,7 +235,7 @@ def delete_all():
 @app.route("/producto/", methods=['GET', 'POST'])
 def product():
     param = request.args.get('plate','zumo')
-    formC = comentar()
+    form = comentar()
     if param:
         sql = f'SELECT * FROM plato WHERE nombre="{param}"'
     else:
@@ -238,32 +245,50 @@ def product():
 
     sql2 = f"SELECT * FROM comentario WHERE cod_plato={ideP}"
     res2 = seleccion(sql2)
-
-    sql = f"SELECT id_usuario FROM usuario WHERE user='{ session['user'] }'"
-    res = seleccion(sql)
-    ideU = res[0][0]
+    
+    setVal = "no esta"
     
     if 'user' in session:
+        sql = f"SELECT id_usuario FROM usuario WHERE user='{ session['user'] }'"
+        res = seleccion(sql)
+        ideU = res[0][0]
+
+        sql = f"SELECT cod_plato FROM favoritos WHERE cod_plato='{ideP}' and id_usuario='{ideU}'"
+        resV = seleccion(sql)
+
+        if resV:
+            setVal = "esta"
         if request.method == 'POST':
-            if int(request.form.get('favoritos')) == 1:
-                sqlf = f'INSERT INTO favoritos(id_usuario, cod_plato) VALUES(?, ?)'
-                res = accion(sqlf,(ideU, ideP))
-                print(res)
+            if 'favoritos' in request.form:
+                if setVal != "esta":
+                    sqlf = f"INSERT INTO favoritos(id_usuario, cod_plato) SELECT u.id_usuario, p.cod_plato FROM usuario u, plato p WHERE user='{session['user']}' and cod_plato={ideP}"
+                    print(sqlf)
+                    res = seleccion(sqlf)
+                    print(res)
+                    setVal = "esta"
+                else:
+                    print("Delete of the favorites")
+                    sqlD = f"DELETE FROM favoritos WHERE cod_plato={ideP} and id_usuario={ideU}"
+                    res = seleccion(sqlD)
+                    setVal = "no esta"
+                 
             today = date.today()
-            coment = formC.coment.data
+            coment = form.coment.data
             if coment != "":
                 sql = "INSERT INTO comentario(id_usuario, cod_plato, user, comentario, fecha) VALUES(?, ?, ?, ?, ?)"
                 res = accion(sql,(ideU, ideP, session['user'], coment, format(today)))
-            
+                sql2 = f"SELECT * FROM comentario WHERE cod_plato={ideP}"
+                res2 = seleccion(sql2)
+                form.coment.data = ""
+
             #print(res2[1][2] in session['user'])
             if res!=0:
                 print('INFO: Datos almacenados con exito')
             else:
                 print('ERROR: Por favor reintente')
-            return render_template('product.html', form=formC, titulo='producto', res=res1, res2=res2)
     else:
         print("Lo siento el usuario no esta en sesion ahora mismo")
-    return render_template('product.html', form=formC, titulo='producto', res=res1, res2=res2)
+    return render_template('product.html', form=form, titulo='producto', res=res1, res2=res2, setVal=setVal)
         
 #Pagina de dashboard platos
 @app.route('/dashboard/', methods=['GET', 'POST'])
@@ -412,41 +437,29 @@ def editProfile():
             vema= escape(form.verificarEma.data)
             #Validad datos
             sw = True
-            if name:
-                if len(name)>40:
-                    print("longitud no valida [5-40]")
-                    sw = False    
-                sql=f"UPDATE usuario SET nombre=? WHERE user='{session['user']}'"
-            if lName:
-                if len(lName)>40:
-                    print("longitud no valida [5-40] para el apellido")
-                    sw = False
-                sql=f"UPDATE usuario SET apellido=? WHERE user='{session['user']}'"
-            if adress:
-                if len(adress)>40:
-                    print("longitud no valida [5-40]")
-                    sw = False
-                sql=f"UPDATE usuario SET direccion=? WHERE user='{session['user']}'"
-            if num:
-                if len(num)>10:
-                    print("NO agrege prefigo (+57), y asegúrese de que sea un numero valido en Colombia")
-                    sw = False
-                sql=f"UPDATE usuario SET telefono=? WHERE user='{session['user']}'"
-            if ema:
-                if len(ema)>40:
-                    print("longitud no valida [5-40]")
-                    sw = False
-                if ema != vema:
-                    print("No concuerdan los email")
-                    sw = False
-                sql=f"UPDATE usuario SET email=? WHERE user='{session['user']}'"
-            if name and lName and adress and ema and num:
-                sql=f"UPDATE usuario SET nombre=?, apellido=?, telefono=?, direccion=?, email=? WHERE user='{session['user']}'"
+            if len(name)<5 or len(name)>40:
+                print("El nombre es requerido, longitud no valida [5-40]")
+                sw = False
+            if len(lName)<5 or len(lName)>40:
+                print("longitud no valida [5-40] para el apellido")
+                sw = False
+            if len(ema)<5 or len(ema)>40:
+                print("El email es requerido, longitud no valida [5-40]")
+                sw = False
+            if ema != ema:
+                print("EL email no concuerda")
+                sw = False
+            if len(adress)<5 or len(adress)>40:
+                print("la direccion es requerido, longitud no valida [5-40]")
+                sw = False
+            if len(num) < 5 or len(num) > 10:
+                print("El numero es incorrecto, agrege un numero de Colombia")
+                sw = False
+
             if sw:
                 # Ejecutar la consulta
-                print(sql,( name, lName, num, adress, ema))
-                print(accion(sql,( name, lName, num, adress, ema)))
-                res = accion(sql,( name, lName, num, adress, ema))
+                sql = f"UPDATE usuario SET nombre=?, apellido=?, telefono=?, direccion=?, email=? WHERE user='{session['user']}'"
+                res = accion(sql,(name, lName, num, adress, ema))
                 #Procesar la respuesta
                 if res!=0:
                     print('INFO: Datos almacenados con exito')
@@ -467,18 +480,22 @@ def contraseña():
         if request.method =='GET':
             return render_template("change_passsword.html", form=form)
         else:
-            claV = form.claV.data
+            claV = escape(form.claV.data.strip())
             #Perepar la aconsulta
-            sql = f"SELECT contraseña FROM usuario WHERE user= '{session['user']}'"
+            sql = f"SELECT contraseña FROM usuario WHERE user='{session['user']}'"
             #Ejecuta la consulta
             res = seleccion(sql)
             #Procesar la consulta
             comp = res[0][0]
+            print(check_password_hash('12345',comp))
+            print("aqui hay un post")
             if check_password_hash(claV,comp):
                 cla = form.cla.data
                 ver = form.ver.data
+                print(cla)
+                print(ver)
                 if cla == ver:
-                    sql = f"UPDATE usuario WHERE user='{session['user']}'"
+                    sql = f"UPDATE usuario SET contraseña=? WHERE user='{session['user']}'"
                     # Ejecutar la consulta
                     pwd = generate_password_hash(cla)
                     res = accion(sql,(pwd))
@@ -491,7 +508,7 @@ def contraseña():
                 else:
                     print("Las claves no concuerdan")
             else:
-                print("Las claves no concuerdan")
+                print("Las clave esta mal escrita")
             return render_template("change_passsword.html", form=form)
     else:
         return redirect('/home')
@@ -504,6 +521,22 @@ def salir():
     print(session)
     session.clear()
     return redirect('/home')
+
+
+""" @app.after_request
+def after_request(response):
+    print("ESTA EN EL AFTER")
+    if request.endpoint == 'product':
+        print("ENTRO EN EL ENDPOINT")
+        if 'user' in session:
+            if 'favoritos' in request.form:
+                print("ENTRO EN FAVORITOS")
+                param = request.args.get('plate')
+                print(param)
+                sqlf = f"INSERT INTO favoritos(id_usuario, cod_plato) SELECT u.id_usuario, p.Plato FROM usuario u, plato p WHERE user='{session['user']} and cod_plato='{param}'"
+                res = seleccion(sqlf)
+    return response """
+    
 
 if __name__ == '__main__':
     app.run(debug=True)

@@ -32,8 +32,16 @@
                             <input type="number" value='1' min="1" max="10" class="cantidad" name='ncantidad'>
                             <input type="submit" value="Agregar a carrito" class="btn_car">
                         </form>
-                        <form name='favoritos' method="POST" >
-                            <input type="submit"><h1><input id="radio1" type="checkbox" name="favoritos" value="1"><label for="radio1">★</label></h1>
+                        <form name='favoritos' method="POST" action='/producto/?plate={{res[0][2]}}'>
+                            {% if setVal == 'esta' %}
+                            <input class="subirFavorito" type="submit" value=" " id="chek" name='favoritos'><label for="chek" class="subirFavorito">&#10084;</label>
+                            {% else %}
+                            <input class="NosubirFavorito" type="submit" value=" " id="chek" name='favoritos'><label for="chek" class="NosubirFavorito">&#10084;</label>
+                            {% endif %}
+                            <!-- 
+                                <input id="radio1" type="checkbox" name="favoritos" value="1" checked><label for="radio1">&#10084;</label>
+                                <input id="radio1" type="checkbox" name="favoritos" value="1"><label for="radio1">&#10084;</label>
+                            -->
                         </form>
                     </div>
                 </div>
@@ -44,7 +52,7 @@
 </section>
 <!-- section agregar comentarios-->
 <section >
-    <form name='fcoment' id='fcoment' action='/product' method='POST'>
+    <form name='fcoment' id='fcoment' action='/producto/?plate={{res[0][2]}}' method='POST'>
         <div>
             <h2 class="label-titulos">{{ nComentarios }}  {{ form.coment.label()}}</h2>
         </div>

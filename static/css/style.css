@@ -742,6 +742,9 @@ tr:nth-child(odd) {
   margin-left: 100px;
   cursor: pointer;
 }
+.btn_car:hover{
+  color: var(--marronclaro);
+}
 
 .table-shopping td, .table-shopping th{
   border: 0px solid #ffffff;
@@ -853,17 +856,23 @@ label {
 
 label:hover,
 label:hover ~ label {
-  color: orange;
+  color: var(--marron);
 }
 
 input[type="checkbox"]:checked ~ label {
-  color: orange;
+  color: brown;
 }
 input[type="checkbox"] {
   display: none;
 }
-
-
+.subirFavorito{
+  color: brown;
+  background-color: transparent; 
+}
+.NosubirFavorito{
+  color: #797979;
+  background-color: transparent;  
+}
 
 
 
