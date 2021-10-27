@@ -33,7 +33,7 @@
                     <th>Nombre</th>
                     <th>Precio</th>
                     <th>Calificacion</th>
-                    <th>Comentario</th>
+                    <th>Gestionar</th>
                   </tr>
                   {% for i in res %}
                   <tr>
@@ -42,14 +42,12 @@
                     <td>{{ i[2] }}</td>
                     <td>{{ i[4] }}</td>
                     <td>${{ i[6] }}</td>
-                    <td><a>Comentario</a></td>
+                    <td><a href='/dashboard/platos/editar_plato/?id_plato={{i[0]}}'>Editar &nbsp;</a> <a href='/delete/?id_plato={{i[0]}}'>&nbsp; Eliminar</a></td>
                   </tr>
                   {% endfor%}
                 </table>
                 <div class="botones">
-                  <input type="submit" value="Agregar" href='/dashboard/platos/agregar_plato/'>
-                  <input type="submit" value="Editar" href='/dashboard/platos/editar_plato/'>
-                  <input type="submit" value="Eliminar">
+                  <a href='/dashboard/platos/agregar_plato/'><input type="submit" value="Agregar" ></a>
               </div>
           </div> 
     

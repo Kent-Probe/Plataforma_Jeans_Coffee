@@ -1,6 +1,7 @@
 import os
 from datetime import date
 from re import T
+import re
 
 from flask import Flask, flash, render_template, request, session, redirect, url_for
 from flask.scaffold import F
@@ -216,11 +217,24 @@ def shopping_car():
 
   
 # #delete carrito
-@app.route('/delete/<string:id_usuario>/')
-def delete(id_usuario):
-    sql = f"DELETE FROM compra WHERE id_usuario={id_usuario}"
-    dat = seleccion(sql)
-    return redirect(url_for('shopping_car'))
+@app.route('/delete/')
+def delete():
+    if 'id_compra' in request.args: 
+        id_compra = request.args.get('id_compra')
+        sql = f"DELETE FROM compra WHERE id_compra={id_compra}"
+        dat = seleccion(sql)
+        return redirect(url_for('shopping_car'))
+    elif 'id_plato' in request.args:
+        cod_plato = request.args.get('id_plato')
+        sql = f"DELETE FROM plato WHERE cod_plato={cod_plato}"
+        dat = seleccion(sql)
+        return redirect(url_for('dashboard'))
+    elif 'id_user' in request.args:
+        id_usuario = request.args.get('id_user')
+        sql = f"DELETE FROM usuario WHERE id_usuario={id_usuario}"
+        dat = seleccion(sql)
+        return redirect(url_for('usuarios'))
+    
 
 
 # Borrar todos los registros de shopping_car
@@ -313,19 +327,37 @@ def dashboard():
 @app.route('/dashboard/usuarios/', methods=['GET', 'POST'])
 def usuarios():
     form = search()
+    print(request.args.get('cliente'))
     if request.method == 'GET':
-        sql = f'SELECT *FROM usuario'
+        sql = f'SELECT * FROM usuario WHERE id_usuario > 1 '
         res = seleccion(sql)
     else:
         seh = form.seh.data
         param = request.args.get('seh', seh)
         if param:
-            sql = f"SELECT * FROM usuario WHERE nombre LIKE '{param}%'"
+            sql = f"SELECT * FROM usuario WHERE nombre LIKE '{param}%' and id_usuario > 1"
             res = seleccion(sql)
         else:
-            sql = f'SELECT *FROM usuario'
+            sql = f'SELECT * FROM usuario WHERE id_usuario > 1'
             res = seleccion(sql)
     return render_template('usuarios.html', form=form, titulo='dashboard', res=res)
+
+@app.route('/asignarRol/')
+def asignarRol():
+    admin = request.args.get('admin')
+    cliente = request.args.get('cliente')
+    print(request.args.get('admin'))
+    print(request.args.get('cliente'))
+    if admin:
+        sqlU = f"UPDATE usuario SET rol='admin' WHERE id_usuario={admin}"
+        print(sqlU)
+        res = seleccion(sqlU)
+        return redirect(url_for('usuarios'))
+    if cliente:
+        sqlU = f"UPDATE usuario SET rol='cliente' WHERE id_usuario={cliente}"
+        print(sqlU)
+        res = seleccion(sqlU)
+        return redirect(url_for('usuarios'))
 
 #Pagina dashboard agregar platos
 @app.route('/dashboard/platos/add_plate/', methods=['GET', 'POST'])
@@ -362,8 +394,14 @@ def addPlatos():
 def editPlato():
     form = plate()
     if request.method=='GET':
-        sql = "SELECT * FROM plato WHERE nombre= 'zumo'"
+        param = request.args.get('id_plato')
+        if param:
+            sql = f"SELECT * FROM plato WHERE cod_plato='{param}'"
+        else:
+            sql = "SELECT * FROM plato WHERE cod_plato=1"
+
         res = seleccion(sql)
+
         for i in res:
             form.nPlato.data = i[2]
             form.pPlato.data = i[-1]

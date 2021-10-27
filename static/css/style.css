@@ -316,7 +316,7 @@ header .navbar #principal:hover {
   font-weight: normal;
   font-size: 24px;
   line-height: 36px;
-  margin-top: 50PX;
+
   color: #06496E;
 }
 .rectangulo{
@@ -331,9 +331,13 @@ header .navbar #principal:hover {
 .icon-buscar{
   color: #ffffff;
   align-items: center;
-  margin-left: 10px;
-}
 
+}
+.fasearchI{
+  font-size: 20px;
+  cursor: pointer;
+  
+}
 
 /*Plato individual*/
 .plato{
@@ -376,6 +380,7 @@ header .navbar #principal:hover {
   font-weight: bold;
   font-size: 24px;
   margin-left: 20px;
+  color: var(--marron);
 }
 .name-price{
   font-family: Poppins;
